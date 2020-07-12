@@ -1,6 +1,7 @@
 #  My first project: CaveWorld. It is a simple game with RPG elements and ASCII graphic.
 
 import time
+from Character import *
 
 #Intro
 def intro():
@@ -44,7 +45,6 @@ def main_menu():
 
         # NewGame
         if choice == "0":
-            pass
 
         # Options
         elif choice == "1":
@@ -67,10 +67,9 @@ def main_menu():
         else:
             print("Sorry, but {} isn't a valid choice.".format(choice))
 
-intro()
-main_menu()
-
 #########################
 
 '''TEST'''
 
+intro()
+main_menu()
