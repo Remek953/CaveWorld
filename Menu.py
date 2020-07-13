@@ -1,7 +1,6 @@
-#  My first project: CaveWorld. It is a simple game with RPG elements and ASCII graphic.
+#  My first project: CaveWorld. It is a game with RPG elements and ASCII graphic.
 
 import time
-from Character import *
 
 #Intro
 def intro():
@@ -45,6 +44,7 @@ def main_menu():
 
         # NewGame
         if choice == "0":
+            pass
 
         # Options
         elif choice == "1":

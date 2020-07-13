@@ -1,5 +1,8 @@
-# CaveWorld
+import time
 
+def about_me():
+    print('''
+    
                      _____                     _    _               _      _ 
                     /  __ \                   | |  | |             | |    | |
                     | /  \/  __ _ __   __ ___ | |  | |  ___   _ __ | |  __| |
@@ -20,3 +23,8 @@
 
     I hope you will enjoy my game and I will be waiting for your feedback. :) (mail: remek.kosiorek@gmail.com)
     
+    ''')
+
+    time.sleep(1)
+
+    print('\t\t\t====press KEY to return====') #return to main menu

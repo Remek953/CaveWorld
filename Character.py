@@ -21,9 +21,9 @@ def hero_race():
     Elf -    \t1 strength \t3 agility \t1 luck
     Fairy -  \t1 strength \t1 agility \t3 luck
     
-    Strenght - +1 dmg
+    Strenght - +1 max dmg
     Agility - +1% dodge
-    Luck - +1% critical dmg (2 x dmg)
+    Luck - +1% critical dmg (2.5 x dmg)
     
     ''')
     race = input("Enter race:  ")
@@ -68,16 +68,14 @@ def hero_stats():
     If you choose to, you can then take points from an attribute and put them back
     in the pool.
     
-    Strenght - +1 dmg
+    Strenght - +1 max dmg
     Agility - +1% dodge
     Luck - +1% critical dmg (2 x dmg)
     
     """
           )
 
-
-
-    attributes =  {'strength': 3, 'agility': 1, 'luck': 1}
+    attributes =  {'strength': 3, 'agility': 1, 'luck': 1} #change to race_stats
     pool = 20
 
     choice = None
