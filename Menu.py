@@ -1,10 +1,11 @@
 #  My first project: CaveWorld. It is a game with RPG elements and ASCII graphic.
-
+import sys
 import time
 
 #Intro
-def intro():
+def display_intro():
     print('''
+   
     - --+--------------------------------------------------------------------+-- -  
         |                                                                    |    
         |   __                 _      _                                      |    
@@ -17,6 +18,40 @@ def intro():
         |                                                                    |    
     - --+--------------------------------------------------------------------+-- -
         '                                                                    '     
+          
+          
+                 .......::::::::::::)..           .......................(::::::........
+          .:::::;;;;;;;;):::::::.... .           .......:::::::::::::<......
+              <  >>>                   ,.
+      .::..  ;   I;L\  /L\.  ..::..   /iL.           |         ..::::::::::::..
+            ;    II;L\/LLLL;         / I;L\    \     |     / /\_   Collage by
+                 II;..LLLLLL\    _._/ I;:.L\     \   |   / _/J; \    Bob Allison
+          :     IIIIi;..LLLLL\__/   IIII:..L\____  \###/  /JJI:  \
+        ,;     ILIi;;;:...:LLL;\      IIIII;.LLLLL\#####/JJ II;   \
+       ;     I LLii;;;.:.. :LLL;\     III;;;::LLLLL\###/JJ IIII;   \_.
+      :     IIILiii;;::.... :LLL;|      ;;I;;::.:LLLLLL:;IJ IIIII;:   \__.
+               IIIII IIii;;::;..;\          ;;:::...LLLL;IJIII;;    :::   \
+    :    ;    IIIIIIIIIii;;::.;..      _==|      ;..  :;IJIII;:::    ::    \
+        ;    ::::::::::::;;::..;  _==|   )__)  |                            \
+     '  '"  "  ""'""'""  ""'"  '"    )_)  )___) ))  ""''"   ""'"  "'" "'"'"'  "'""
+            '""   ""^^       ^~   )___) )____))_)   ~~         ""^^^""  '  "  "~"
+    ' ^^            ^        _    )____)_____))__)\      ~^~~^           ^^"
+         '^^          ^~      \---__|____/|___|___-\\--        "~"~         "~"
+       ''    '^          ~"~   \   oo oo oo oo     /      ~"      '~       ""~"
+            ____   ^^^"~   ~~^^^^^^^^^^^^^^^^^^^^^^    ^~^            ^~^^^
+          /  o   \     ""'"  __          __ "'"''     '   ''~     ~""~"`    ""''
+        < ____     \"'"    /    \   "' /    \       _          _    "~    _
+              |     |     |  __  |    |  __  |    /   \      /   \       / |
+        '''   |_____|  '  |__||__| '' |__||__| ' |_____| '' |_____| ""  /_/
+             '''     ~^^^^      '"""^^'''''^        '''''''""        '''''^^""
+       ''          '^^           ~^^~          ~^ '      ~~      '  ^   ^^^^^^^^
+
+            ------------------------------------------------
+            Thank you for visiting https://asciiart.website/
+            This ASCII pic can be found at
+            https://asciiart.website/index.php?art=creatures/monsters
+               
+          
           ''')
     time.sleep(1)
 
@@ -61,7 +96,7 @@ def main_menu():
         # Exit
         elif choice == "4":
             print("Goodbye!")
-            break
+            sys.exit()
 
         # Unknown choice
         else:
@@ -69,7 +104,3 @@ def main_menu():
 
 #########################
 
-'''TEST'''
-
-intro()
-main_menu()

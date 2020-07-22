@@ -1,96 +1,124 @@
+import random
+import copy
+import os
 
-def hero_name():
-    print('Choose your name. Min 1 and max 12 characters')
-    username = input("Enter name:  ")
-    while True:
-        if (len(username) < 1):
-                    print('Choose your name. Min 1 and max 12 characters')
-                    print("Username too short")
-                    username = input("Enter name:  ")
-        elif (len(username) > 12):
-                    print('Choose your name. Min 1 and max 12 characters')
-                    print("Username too long")
-                    username = input("Enter name:  ")
+class Character:
+    def __init__(self, name, strength, agility, luck, health, defense):
+        self.name = name
+        self.strength = strength
+        self.agility = agility
+        self.luck = luck
+        self.max_health = 100 + 5*health
+        self.defense = defense
+        self.health = self.max_health
+        self.attack = 50
+        self.evade_chance = 2
+        self.crit_chance = 5
 
 
-def hero_race():
+def enemy_select(Orc, Goblin, Zombie):
+    enemy_list = [Orc, Goblin, Zombie]
+    enemy_chance = random.randint(0,3)
+    enemy = enemy_list[enemy_chance]
+    return enemy
 
+
+def create_name():
+    name = input("What is your name:  ")
+    while (len(name) < 1) or (len(name) > 12):
+        print('Choose your name. Min 1 and max 12 characters')
+        print("Username too short or too long")
+        name = input("What is your name:  ")
+
+    return name
+
+def choose_race():
     print('''Choose your race: 
     Human -  \t2 strength \t2 agility \t1 luck
     Orc -    \t3 strength \t1 agility \t1 luck
     Elf -    \t1 strength \t3 agility \t1 luck
     Fairy -  \t1 strength \t1 agility \t3 luck
-    
+
     Strenght - +1 max dmg
     Agility - +1% dodge
     Luck - +1% critical dmg (2.5 x dmg)
-    
+
     ''')
+
     race = input("Enter race:  ")
-    while race.lower() != 'human' and race.lower() != 'orc' and race.lower() != 'elf' and race.lower() != 'fairy':
+    while race.lower() != 'human' and race.lower() != 'orc' and \
+            race.lower() != 'elf' and race.lower() != 'fairy':
         print('\nPlease choose: Human or Orc or Elf or Fairy')
         race = input("Enter race:  ")
 
     race_stats = {}
+    while race_stats == {}:
+        if race == 'human':
+            stats = {'strength': 20, 'agility': 15, 'luck': 15,
+                     'health': 15, 'defense': 15}
+            race_stats.update(stats)
 
-    if race == 'human':
-         stats = {'strength': 2, 'agility': 1, 'luck': 1}
-         race_stats.update(stats)
+        elif race == 'orc':
+            stats = {'strength': 30, 'agility': 10, 'luck': 10,
+                     'health': 20, 'defense': 20}
+            race_stats.update(stats)
 
-    elif race == 'orc':
-         stats = {'strength': 3, 'agility': 1, 'luck': 1}
-         race_stats.update(stats)
+        elif race == 'elf':
+            stats = {'strength': 10, 'agility': 30, 'luck': 10,
+                     'health': 25, 'defense': 15}
+            race_stats.update(stats)
 
-    elif race == 'elf':
-         stats = {'strength': 1, 'agility': 3, 'luck': 1}
-         race_stats.update(stats)
-
-    elif race == 'fairy':
-         stats = {'strength': 1, 'agility': 1, 'luck': 3}
-         race_stats.update(stats)
+        elif race == 'fairy':
+            stats = {'strength': 10, 'agility': 20, 'luck': 30,
+                     'health': 20, 'defense': 10}
+            race_stats.update(stats)
 
     print("\nYour character has the following attributes:")
     for attribute, points in race_stats.items():
         print("\t{} :  \t {}".format(attribute.title(), points))
 
+    return race_stats
 
+def player_stats():
+    os.system("cls")
 
-
-
-
-
-
-def hero_stats():
+    race_stats = choose_race()
 
     print("""
-    You have 20 points in a pool to spend as you wish on the attributes:
-        Strength, Agility, Luck
-    If you choose to, you can then take points from an attribute and put them back
-    in the pool.
-    
-    Strenght - +1 max dmg
-    Agility - +1% dodge
-    Luck - +1% critical dmg (2 x dmg)
-    
-    """
+        You have 40 points in a pool to spend as you wish on the attributes:
+            Strength, Agility, Luck, Health, Defense
+        If you choose to, you can then take points from an attribute and put them back
+        in the pool.
+
+        Strenght - +1 min and max dmg,
+        Agility - +1% dodge,
+        Luck - +1% critical chance dmg (2 x dmg),
+        Health - +5 health,
+        Defense - -1 dmg reduce
+
+        """
           )
 
-    attributes =  {'strength': 3, 'agility': 1, 'luck': 1} #change to race_stats
-    pool = 20
+
+    attributes = copy.deepcopy(race_stats)
+    max_pool = 40
+    pool = 40
 
     choice = None
     choice_sentence = """
-    \n\nWhat would you like to do?
-    0 - Next
-    1 - Spend points on an attribute
-    2 - Put points into pool
-    """
+        \n\nWhat would you like to do?
+        0 - Start Game
+        1 - Spend points on an attribute
+        2 - Put points into pool
+        """
 
     attribute_list = """
-    \t - Strength
-    \t - Agility
-    \t - Luck
-    """
+        \t - Strength
+        \t - Agility
+        \t - Luck
+        \t - Health
+        \t - Defense
+        """
 
     while choice != "0":
         print("\nYour character has the following attributes:")
@@ -113,9 +141,13 @@ def hero_stats():
             print(attribute_list)
 
             change_attributes = input("Attribute to change: ")
-            while (change_attributes.lower() != "strength" and
+            while (
+                   change_attributes.lower() != "strength" and
                    change_attributes.lower() != "agility" and
-                   change_attributes.lower() != "luck"):
+                   change_attributes.lower() != "luck" and
+                   change_attributes.lower() != "health" and
+                   change_attributes.lower() != "defense"
+            ):
                 print("That is an invalid choice.")
                 print("Which attribute would you like to add to?")
                 print(attribute_list)
@@ -125,6 +157,7 @@ def hero_stats():
                 while points > pool:
                     print("That's too many points. You have {} to spend".format(pool))
                     points = int(input("How many points would you like to spend?: "))
+
             attributes[change_attributes.lower()] += points
             pool -= points
             print("\nYour attributes")
@@ -143,8 +176,8 @@ def hero_stats():
             if another_change.lower() == "no" or another_change.lower() == "n":
                 break
 
-        while choice == "2":  # add points to pool
-            if pool == 20:  # pool already full
+        while choice == "2":
+            if pool == max_pool:  # pool already full
                 print("\nSorry, you have no points in your attributes."
                       "\nTry adding some points to your attributes first.")
                 break
@@ -153,9 +186,13 @@ def hero_stats():
             for attribute, points in attributes.items():
                 print("\t{} :  \t {}".format(attribute.title(), points))
             change_attributes = input("Choice: ")
-            while (change_attributes.lower() != "strength" and
-                   change_attributes.lower() != "agility" and
-                   change_attributes.lower() != "luck"):
+            while (
+                    change_attributes.lower() != "strength" and
+                    change_attributes.lower() != "agility" and
+                    change_attributes.lower() != "luck" and
+                    change_attributes.lower() != "health" and
+                    change_attributes.lower() != "defense"
+            ):
                 print("\nThat is an invalid choice.")
                 print("\nWhich attribute would you like to take points out of?")
                 for attribute, points in attributes.items():
@@ -163,36 +200,61 @@ def hero_stats():
                 change_attributes = input("Choice: ")
 
             while attributes[change_attributes.lower()] == 0:
-                # no points can be removed, change this to race stats!
+                # when pool of points is zero
                 print("You don't have any points in that attribute.")
                 change_attributes = input("Choice: ")
-                while (change_attributes.lower() != "strength" and
-                       change_attributes.lower() != "agility" and
-                       change_attributes.lower() != "luck"):
+                while (
+                        change_attributes.lower() != "strength" and
+                        change_attributes.lower() != "agility" and
+                        change_attributes.lower() != "luck" and
+                        change_attributes.lower() != "health" and
+                        change_attributes.lower() != "defense"
+                ):
                     print("That is an invalid choice.")
                     print("Which attribute would you like to take points out of?")
                     change_attributes = input("Choice: ")
             points = int(input("\nHow many points would you like to remove?: "))
+
             while points > attributes[change_attributes.lower()]:
                 # not enough points in attribute
                 print("Sorry, that's too many points! You only have {} "
-                      "in {} ".format(attributes[change_attributese], change_attributes))
+                      "in {} ".format(attributes[change_attributes.lower()], change_attributes.lower()))
                 points = int(input("\nHow many points would you like to remove?: "))
-            print("OK!")
+
+            check_stats = attributes[change_attributes.lower()] - points
+            while check_stats < race_stats[change_attributes.lower()]:
+                # cant change constant value in race_stats
+                print("Sorry, You cant change basic race stats. Your race stat is {} "
+                      "in {}. ".format(race_stats[change_attributes.lower()], change_attributes.lower()))
+                points = 0
+                choice = '2'
+                break
+
+            another_change = input("\nWant to change another attribute? Yes or No: ")
+            while another_change.lower() != "yes" and another_change.lower() != "no" \
+                    and another_change.lower() != "y" and another_change.lower() != "n":
+                print("That's an invalid choice.")
+                another_change = input("Want to change another attribute? Yes or No: ")
+            if another_change.lower() == "no" or another_change.lower() == "n":
+                choice = None
+                break
+
+            print("Alright!")
             pool += points
             attributes[change_attributes.lower()] -= points
             print("You now have {} points left in your pool.".format(pool))
 
-            another_change = input("\nWant to change another attribute? Yes or No: ")
-            while another_change.lower() != "yes" and another_change.lower() != "no" \
-                and another_change.lower() != "y" and another_change.lower() != "n":
-                print("That's an invalid choice.")
-                another_change = input("Want to change another attribute? Yes or No: ")
-            if another_change.lower() == "no" or another_change.lower() == "n":
-                break
 
 
+    return attributes['strength'], attributes['agility'], attributes['luck'], \
+           attributes['health'], attributes['defense']
 
+player_name = create_name()
+player_stats = player_stats()
 
+Player = Character(player_name[0], player_stats[0], player_stats[1],
+                   player_stats[2], player_stats[3], player_stats[4])
 
-
+print(Player.luck)
+print(Player.max_health)
+print(Player.defense)
