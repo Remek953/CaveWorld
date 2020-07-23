@@ -16,13 +16,15 @@ def about_me():
     
     Hello Adventurer. My name is Remek and this is my first major project in Python: CaveWorld. 
     
-    It is a game with RPG elements and ASCII graphic.
+    It is a tezt game with RPG elements and ASCII graphic.
     The idea came up when I read "Python Programming for the Absolute Beginner" by Michael Dawson and 
     I always love play the video games. That is why my first goal was to create a game.
-    Finally, after countless hours watching tutorials, doing exercises at codewars.com 
+    Finally, after countless hours of watching tutorials, doing exercises at codewars.com 
     and reading about Python, I started my first project.
 
-    I hope you will enjoy my game and I will be waiting for your feedback. :) (mail: remek.kosiorek@gmail.com)
+    I hope you will enjoy my game and I will be waiting for your feedback. :) 
+    mail: remek.kosiorek@gmail.com
+    github: https://github.com/Remek953
     
     ''')
 

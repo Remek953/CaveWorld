@@ -1,35 +1,36 @@
-class Orc(object):
-    def __init__(self):
-        self.name = "Orc"
-        self.max_health = 150
-        self.health = self.max_health
-        self.attack = 25
-        self.defense = 20
-        self.evade_chance = 2
-        self.crit_chance = 5
+import random
 
-class Bat(object):
-    def __init__(self):
-        self.name = "Goblin"
-        self.max_health = 50
-        self.health = self.max_health
-        self.attack = 10
-        self.defense = 5
-        self.evade_chance = 2
-        self.crit_chance = 5
 
-class Skeleton(object):
-    def __init__(self):
-        self.name = "Skeleton"
-        self.max_health = 100
+class Monster:
+    def __init__(self, name, base_attack, defense, max_health,
+                 evade_chance, critical_chance, points, hit_chance):
+        self.name = name
+        self.base_attack = base_attack
+        self.defense = defense
+        self.max_health = max_health
         self.health = self.max_health
-        self.attack = 15
-        self.defense = 10
-        self.evade_chance = 2
-        self.crit_chance = 5
+        self.evade_chance = evade_chance
+        self.critical_chance = critical_chance
+        self.points = points
+        self.hit_chance = hit_chance
+
+    def get_attack(self):
+        attack = round(random.uniform(self.base_attack/2, self.base_attack))
+        return attack
+
+    def get_critical_dmg(self):
+        critical_dmg = 2 * self.get_attack()
+        return critical_dmg
+
+
+orc = Monster("Orc", 25, 20, 150, 5, 5, 25, 8)
+bat = Monster("Bat", 10, 5, 150, 5, 5, 10, 6)
+skeleton = Monster("Skeleton", 15, 20, 100, 5, 5, 15, 7)
+
 
 
 def display_orc():
+    print(" A dangerous orc has appeared!")
     print("""
                     (    )
                   ((((()))
@@ -56,15 +57,16 @@ def display_orc():
                         /,/,"
 
 ------------------------------------------------
-Thank you for visiting https://asciiart.website/
 This ASCII pic can be found at
 https://asciiart.website/index.php?art=creatures/monsters
 
     """)
 
 
-def display_goblin():
+def display_bat():
+    print(" A wicked bat has appeared!")
     print("""
+    
         =/\                 /\=
         / \'._   (\_/)   _.'/ \
        / .''._'--(o.o)--'_.''. \
@@ -73,16 +75,18 @@ def display_goblin():
     /.-' jgs   `\(-V-)/`       `-.\
     `            "   "            `
 
+
 ------------------------------------------------
-Thank you for visiting https://asciiart.website/
 This ASCII pic can be found at
 https://asciiart.website/index.php?art=animals/bats
 
     """)
 
 
-def display_Skeleton():
+def display_skeleton():
+    print(" A murderous skeleton has appeared!")
     print("""
+    
             ,--.
            ([ oo]
             `- ^\
@@ -96,7 +100,6 @@ def display_Skeleton():
          \\-T-"`, |H   Ojo
 
 ------------------------------------------------
-Thank you for visiting https://asciiart.website/
 This ASCII pic can be found at
 https://asciiart.website/index.php?art=people/skeletons
 

@@ -1,6 +1,6 @@
-import random
 import copy
 import os
+import random
 
 class Character:
     def __init__(self, name, strength, agility, luck, health, defense):
@@ -9,35 +9,54 @@ class Character:
         self.agility = agility
         self.luck = luck
         self.max_health = 100 + 5*health
-        self.defense = defense
         self.health = self.max_health
-        self.attack = 50
-        self.evade_chance = 2
-        self.crit_chance = 5
+        self.defense = defense
+        self.base_attack = 20
+        self.critical_chance = 2
+        self.hit_chance = 8
+
+    def get_attack(self):
+        attack = round(random.uniform((self.base_attack + self.strength) / 2,
+                                         self.base_attack + self.strength))
+        return attack
+
+    def get_evade(self):
+        evade = round(random.uniform(0, 10), 2) + self.agility * 0.01
+        return evade
+
+    def get_critical(self):
+        critical = round(random.uniform(0, 10), 2) + self.luck * 0.01
+        return critical
+
+    def get_critical_dmg(self):
+        critical_dmg = 2 * self.get_attack()
+        return critical_dmg
 
 
-def enemy_select(Orc, Goblin, Zombie):
-    enemy_list = [Orc, Goblin, Zombie]
-    enemy_chance = random.randint(0,3)
-    enemy = enemy_list[enemy_chance]
-    return enemy
+
+
+
+
+
+
+
 
 
 def create_name():
     name = input("What is your name:  ")
-    while (len(name) < 1) or (len(name) > 12):
+    while (len(name) < 1) and (len(name) > 12):
         print('Choose your name. Min 1 and max 12 characters')
         print("Username too short or too long")
         name = input("What is your name:  ")
-
     return name
+
 
 def choose_race():
     print('''Choose your race: 
-    Human -  \t2 strength \t2 agility \t1 luck
-    Orc -    \t3 strength \t1 agility \t1 luck
-    Elf -    \t1 strength \t3 agility \t1 luck
-    Fairy -  \t1 strength \t1 agility \t3 luck
+    Human -  \t20 strength \t15 agility \t15 luck \t15 health \t15 defense
+    Orc -    \t30 strength \t10 agility \t10 luck \t20 health \t20 defense
+    Elf -    \t10 strength \t30 agility \t10 luck \t25 health \t15 defense
+    Fairy -  \t10 strength \t20 agility \t30 luck \t25 health \t15 defense
 
     Strenght - +1 max dmg
     Agility - +1% dodge
@@ -79,6 +98,7 @@ def choose_race():
 
     return race_stats
 
+
 def player_stats():
     os.system("cls")
 
@@ -91,14 +111,13 @@ def player_stats():
         in the pool.
 
         Strenght - +1 min and max dmg,
-        Agility - +1% dodge,
+        Agility - +1% evade,
         Luck - +1% critical chance dmg (2 x dmg),
         Health - +5 health,
         Defense - -1 dmg reduce
 
         """
           )
-
 
     attributes = copy.deepcopy(race_stats)
     max_pool = 40
@@ -244,17 +263,12 @@ def player_stats():
             attributes[change_attributes.lower()] -= points
             print("You now have {} points left in your pool.".format(pool))
 
-
-
     return attributes['strength'], attributes['agility'], attributes['luck'], \
            attributes['health'], attributes['defense']
 
-player_name = create_name()
-player_stats = player_stats()
 
-Player = Character(player_name[0], player_stats[0], player_stats[1],
-                   player_stats[2], player_stats[3], player_stats[4])
-
-print(Player.luck)
-print(Player.max_health)
-print(Player.defense)
+def choose_class():
+    # 1 - Warrior - +10% damage and +10% defence
+    # 2 - Rogue - +10% evade and +10% critical chance
+    # 3 - Monk - +20% health
+    pass

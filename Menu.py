@@ -47,7 +47,6 @@ def display_intro():
        ''          '^^           ~^^~          ~^ '      ~~      '  ^   ^^^^^^^^
 
             ------------------------------------------------
-            Thank you for visiting https://asciiart.website/
             This ASCII pic can be found at
             https://asciiart.website/index.php?art=creatures/monsters
                

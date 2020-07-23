@@ -18,21 +18,6 @@ def play():
     
     ''')
 
-    hero_health = 150
-   '''
-    add_str = attributes[strength]
-
-    add_dod = attributes[agility]
-    dodge = add_dod * 0.01
-
-
-    add_crit = attributes[luck]
-    crit_chance = add_crit * 0.01
-    cirt_dmg = 2.5 * hero_damage
-
-    orcs_hp = 50
-    '''
-
 
     orcs_count = 0
 
