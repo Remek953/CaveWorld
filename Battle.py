@@ -11,7 +11,6 @@ player = Character(player_name, player_stats[0], player_stats[1],
                    player_stats[2], player_stats[3], player_stats[4])
 
 
-
 def enemy_select(*args):
     enemy_list = [*args]
     length_list = (len(enemy_list))-1
@@ -19,18 +18,6 @@ def enemy_select(*args):
     enemy = enemy_list[enemy_chance]
     return enemy
 
-global enemy
-enemy = enemy_select(orc, bat)
-
-def display_enemy():
-    if enemy.name.lower() == "orc":
-        display_orc()
-    elif enemy.name.lower() == "bat":
-        display_bat()
-    elif enemy.name.lower() == "skeleton":
-        display_skeleton()
-    else:
-        print("Invisible monster has appeared!")
 
 def enemy_attack():
     enemy_damage = enemy.get_attack() - player.defense
@@ -53,16 +40,15 @@ def enemy_attack():
                 print(f"Nice! {player.name.title()} has invincible defense! {player.name.title()} takes 0 dmg!")
 
         else:
-                player.health -= enemy_damage
-                print(f"{enemy.name.title()} deal {enemy_damage} dmg. "
-                      f"{player.name.title()} has {player.health}/{player.max_health} health.")
-                return player.health
+            player.health -= enemy_damage
+            print(f"{enemy.name.title()} deal {enemy_damage} dmg. "
+                  f"{player.name.title()} has {player.health}/{player.max_health} health.")
+            return player.health
     else:
         print(f"{enemy.name.title()} miss")
 
 
 def player_attack():
-
     player_damage = player.get_attack() - enemy.defense
     player_crit_damage = player.get_critical_dmg() - enemy.defense
     hit_miss_chance = round(random.uniform(0, 10), 2)
@@ -84,28 +70,20 @@ def player_attack():
         pass
 
 
-def enemy_is_dead():
+def count():
     orc_count = 0
     bat_count = 0
     skeleton_count = 0
     total_count = 0
 
-    if enemy.health <= 0:
-        print(f"{enemy.name} has been slayed. ")
-        if enemy.name == "orc":
-            orc_count += 1
+    if enemy.name == "orc":
+        orc_count += 1
 
-        elif enemy.name == "bat":
-            bat_count += 1
+    elif enemy.name == "bat":
+        bat_count += 1
 
-        elif enemy.name == "skeleton":
-            skeleton_count += 1
-
-        return enemy
-
-
-    else:
-        pass
+    elif enemy.name == "skeleton":
+        skeleton_count += 1
 
 
 def player_is_dead():
@@ -126,24 +104,30 @@ def player_is_dead():
 
 
             """)
-        print("Your hero died but defeated {} orcs, {} bats, {} skeletons.")
-
+        print("""
+                Your hero died but defeated: 
+                
+                {} orcs, 
+                {} bats, 
+                {} skeletons.
+                
+            """)
     else:
         pass
 
 
-
 def battle():
-
-
+    global enemy
+    enemy = enemy_select(Orc(), Skeleton(), Bat())
+    enemy.display()
 
     while player.health > 0:
         player_attack()
-        enemy_is_dead()
+        if enemy.is_dead() is True:
+            if battle() is None:
+                break
         enemy_attack()
         player_is_dead()
-
-
 
 
 battle()

@@ -2,7 +2,10 @@ import copy
 import os
 import random
 
-class Character:
+class Character():
+    """
+    Class represents the player character stats.
+    """
     def __init__(self, name, strength, agility, luck, health, defense):
         self.name = name
         self.strength = strength
@@ -17,7 +20,7 @@ class Character:
 
     def get_attack(self):
         attack = round(random.uniform((self.base_attack + self.strength) / 2,
-                                         self.base_attack + self.strength))
+                                       self.base_attack + self.strength))
         return attack
 
     def get_evade(self):
@@ -31,15 +34,6 @@ class Character:
     def get_critical_dmg(self):
         critical_dmg = 2 * self.get_attack()
         return critical_dmg
-
-
-
-
-
-
-
-
-
 
 
 def create_name():
