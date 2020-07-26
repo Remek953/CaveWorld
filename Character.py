@@ -6,28 +6,30 @@ class Character():
     """
     Class represents the player character stats.
     """
-    def __init__(self, name, strength, agility, luck, health, defense):
+    def __init__(self, name, strength, agility, luck, vitality, defense):
         self.name = name
         self.strength = strength
         self.agility = agility
         self.luck = luck
-        self.max_health = 100 + 5*health
+        self.max_health = (300 + 5 * vitality)
         self.health = self.max_health
         self.defense = defense
         self.base_attack = 20
-        self.critical_chance = 2
-        self.hit_chance = 8
+        self.hit_chance = 7
 
     def get_attack(self):
         attack = round(random.uniform((self.base_attack + self.strength) / 2,
                                        self.base_attack + self.strength))
         return attack
 
-    def get_evade(self):
+    def get_hit_chance(self):
+        return self.hit_chance
+
+    def get_evade_chance(self):
         evade = round(random.uniform(0, 10), 2) + self.agility * 0.01
         return evade
 
-    def get_critical(self):
+    def get_critical_chance(self):
         critical = round(random.uniform(0, 10), 2) + self.luck * 0.01
         return critical
 
@@ -35,6 +37,25 @@ class Character():
         critical_dmg = 2 * self.get_attack()
         return critical_dmg
 
+    def is_dead(self):
+        if self.health <= 0:
+            print("""
+        
+        
+        
+                ____    ____  ______    __    __      _______   __   _______  _______  
+                \   \  /   / /  __  \  |  |  |  |    |       \ |  | |   ____||       \ 
+                 \   \/   / |  |  |  | |  |  |  |    |  .--.  ||  | |  |__   |  .--.  |
+                  \_    _/  |  |  |  | |  |  |  |    |  |  |  ||  | |   __|  |  |  |  |
+                    |  |    |  `--'  | |  `--'  |    |  '--'  ||  | |  |____ |  '--'  |
+                    |__|     \______/   \______/     |_______/ |__| |_______||_______/ 
+        
+        
+        
+        
+                """)
+        else:
+            pass
 
 def create_name():
     name = input("What is your name:  ")
@@ -47,15 +68,17 @@ def create_name():
 
 def choose_race():
     print('''Choose your race: 
-    Human -  \t20 strength \t15 agility \t15 luck \t15 health \t15 defense
-    Orc -    \t30 strength \t10 agility \t10 luck \t20 health \t20 defense
-    Elf -    \t10 strength \t30 agility \t10 luck \t25 health \t15 defense
-    Fairy -  \t10 strength \t20 agility \t30 luck \t25 health \t15 defense
+    Human -  \t20 strength \t15 agility \t15 luck \t15 vitality \t15 defense
+    Orc -    \t30 strength \t10 agility \t10 luck \t20 vitality \t20 defense
+    Elf -    \t10 strength \t30 agility \t10 luck \t25 vitality \t15 defense
+    Fairy -  \t10 strength \t20 agility \t30 luck \t25 vitality \t15 defense
 
     Strenght - +1 max dmg
     Agility - +1% dodge
     Luck - +1% critical dmg (2.5 x dmg)
-
+    Vitality - +5 vitality,
+    Defense - -1 dmg reduce
+    
     ''')
 
     race = input("Enter race:  ")
@@ -68,22 +91,22 @@ def choose_race():
     while race_stats == {}:
         if race == 'human':
             stats = {'strength': 20, 'agility': 15, 'luck': 15,
-                     'health': 15, 'defense': 15}
+                     'vitality': 15, 'defense': 15}
             race_stats.update(stats)
 
         elif race == 'orc':
             stats = {'strength': 30, 'agility': 10, 'luck': 10,
-                     'health': 20, 'defense': 20}
+                     'vitality': 20, 'defense': 20}
             race_stats.update(stats)
 
         elif race == 'elf':
             stats = {'strength': 10, 'agility': 30, 'luck': 10,
-                     'health': 25, 'defense': 15}
+                     'vitality': 25, 'defense': 15}
             race_stats.update(stats)
 
         elif race == 'fairy':
             stats = {'strength': 10, 'agility': 20, 'luck': 30,
-                     'health': 20, 'defense': 10}
+                     'vitality': 20, 'defense': 10}
             race_stats.update(stats)
 
     print("\nYour character has the following attributes:")
@@ -100,14 +123,14 @@ def player_stats():
 
     print("""
         You have 40 points in a pool to spend as you wish on the attributes:
-            Strength, Agility, Luck, Health, Defense
+            Strength, Agility, Luck, vitality, Defense
         If you choose to, you can then take points from an attribute and put them back
         in the pool.
 
         Strenght - +1 min and max dmg,
         Agility - +1% evade,
         Luck - +1% critical chance dmg (2 x dmg),
-        Health - +5 health,
+        vitality - +5 vitality,
         Defense - -1 dmg reduce
 
         """
@@ -129,7 +152,7 @@ def player_stats():
         \t - Strength
         \t - Agility
         \t - Luck
-        \t - Health
+        \t - vitality
         \t - Defense
         """
 
@@ -158,7 +181,7 @@ def player_stats():
                    change_attributes.lower() != "strength" and
                    change_attributes.lower() != "agility" and
                    change_attributes.lower() != "luck" and
-                   change_attributes.lower() != "health" and
+                   change_attributes.lower() != "vitality" and
                    change_attributes.lower() != "defense"
             ):
                 print("That is an invalid choice.")
@@ -203,7 +226,7 @@ def player_stats():
                     change_attributes.lower() != "strength" and
                     change_attributes.lower() != "agility" and
                     change_attributes.lower() != "luck" and
-                    change_attributes.lower() != "health" and
+                    change_attributes.lower() != "vitality" and
                     change_attributes.lower() != "defense"
             ):
                 print("\nThat is an invalid choice.")
@@ -220,7 +243,7 @@ def player_stats():
                         change_attributes.lower() != "strength" and
                         change_attributes.lower() != "agility" and
                         change_attributes.lower() != "luck" and
-                        change_attributes.lower() != "health" and
+                        change_attributes.lower() != "vitality" and
                         change_attributes.lower() != "defense"
                 ):
                     print("That is an invalid choice.")
@@ -258,11 +281,11 @@ def player_stats():
             print("You now have {} points left in your pool.".format(pool))
 
     return attributes['strength'], attributes['agility'], attributes['luck'], \
-           attributes['health'], attributes['defense']
+           attributes['vitality'], attributes['defense']
 
 
 def choose_class():
-    # 1 - Warrior - +10% damage and +10% defence
+    # 1 - Warrior - +10% strength and +10% defence
     # 2 - Rogue - +10% evade and +10% critical chance
-    # 3 - Monk - +20% health
+    # 3 - Monk - +20% vitality
     pass

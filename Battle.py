@@ -5,7 +5,7 @@ from Character import *
 
 
 player_name = 'rem'
-player_stats = [60, 15, 15, 15, 20]
+player_stats = [40, 15, 5, 150, 20]
 
 player = Character(player_name, player_stats[0], player_stats[1],
                    player_stats[2], player_stats[3], player_stats[4])
@@ -15,59 +15,39 @@ def enemy_select(*args):
     enemy_list = [*args]
     length_list = (len(enemy_list))-1
     enemy_chance = random.randint(0, length_list)
-    enemy = enemy_list[enemy_chance]
-    return enemy
+    enemy_1 = enemy_list[enemy_chance]
+    return enemy_1
 
 
-def enemy_attack():
-    enemy_damage = enemy.get_attack() - player.defense
-    enemy_crit_damage = enemy.get_critical_dmg()
+def attack(character, target):
+    character_damage = character.get_attack() - target.defense
+    character_crit_damage = character.get_critical_dmg() - target.defense
     hit_crit_chance = round(random.uniform(0, 10), 2)
 
-    if enemy.hit_chance > player.get_evade():
-        if enemy.critical_chance > hit_crit_chance:
+    if character.get_hit_chance() > target.get_evade_chance():
+        if character.get_critical_chance() > hit_crit_chance:
 
-            if enemy_crit_damage <= 0:
-                print(f"Nice! {player.name.title()} has invincible defense! {player.name.title()} takes 0 dmg!")
+            if character_crit_damage <= 0:
+                print(f"Nice! {target.name.title()} has invincible defense! {target.name.title()} takes 0 dmg!")
 
             else:
-                player.health -= enemy_crit_damage
-                print(f"{enemy.name.title()} deal critical {enemy_crit_damage} dmg! "
-                      f"{player.name.title()} has {player.health}/{player.max_health} health.")
-                return player.health
+                target.health -= character_crit_damage
+                print(f"{character.name.title()} deal critical {character_crit_damage} dmg! "
+                      f"{target.name.title()} has {target.health}/{target.max_health} health.")
+                return target.health
 
-        elif enemy_damage <= 0:
-                print(f"Nice! {player.name.title()} has invincible defense! {player.name.title()} takes 0 dmg!")
+        elif character_damage <= 0:
+                print(f"Nice! {target.name.title()} has invincible defense! {target.name.title()} takes 0 dmg!")
 
         else:
-            player.health -= enemy_damage
-            print(f"{enemy.name.title()} deal {enemy_damage} dmg. "
-                  f"{player.name.title()} has {player.health}/{player.max_health} health.")
-            return player.health
+            target.health -= character_damage
+            print(f"{character.name.title()} deal {character_damage} dmg. "
+                  f"{target.name.title()} has {target.health}/{target.max_health} health.")
+            return target.health
     else:
-        print(f"{enemy.name.title()} miss")
+        print(f"{character.name.title()} miss")
 
 
-def player_attack():
-    player_damage = player.get_attack() - enemy.defense
-    player_crit_damage = player.get_critical_dmg() - enemy.defense
-    hit_miss_chance = round(random.uniform(0, 10), 2)
-    hit_crit_chance = round(random.uniform(0, 10), 2)
-
-    if player.hit_chance > hit_miss_chance:
-        if player.get_critical() > hit_crit_chance:
-            enemy.health -= player_crit_damage
-            print(f"{player.name.title()} deal critical {player_crit_damage} dmg. "
-                  f"{enemy.name.title()} has {enemy.health}/{enemy.max_health} health.")
-            return enemy.health
-        else:
-            enemy.health -= player_damage
-            print(f"{player.name.title()} deal {player_damage} dmg. "
-                  f"{enemy.name.title()} has {enemy.health}/{enemy.max_health} health.")
-            return enemy.health
-    else:
-        print(f"{player.name.title()} miss.")
-        pass
 
 
 def count():
@@ -76,58 +56,42 @@ def count():
     skeleton_count = 0
     total_count = 0
 
-    if enemy.name == "orc":
+    if enemy.name.lower() == "orc":
         orc_count += 1
+
 
     elif enemy.name == "bat":
         bat_count += 1
+        return bat_count
 
     elif enemy.name == "skeleton":
         skeleton_count += 1
 
+    print(f"""
+             Your hero died but defeated: 
 
-def player_is_dead():
-    time.sleep(0.7)
-    if player.health <= 0:
-        print("""
+             {orc_count} orcs, 
+              bats, 
+              skeletons.
 
-
-
-            ____    ____  ______    __    __      _______   __   _______  _______  
-            \   \  /   / /  __  \  |  |  |  |    |       \ |  | |   ____||       \ 
-             \   \/   / |  |  |  | |  |  |  |    |  .--.  ||  | |  |__   |  .--.  |
-              \_    _/  |  |  |  | |  |  |  |    |  |  |  ||  | |   __|  |  |  |  |
-                |  |    |  `--'  | |  `--'  |    |  '--'  ||  | |  |____ |  '--'  |
-                |__|     \______/   \______/     |_______/ |__| |_______||_______/ 
-
-
-
-
-            """)
-        print("""
-                Your hero died but defeated: 
-                
-                {} orcs, 
-                {} bats, 
-                {} skeletons.
-                
-            """)
-    else:
-        pass
+         """)
 
 
 def battle():
+
     global enemy
-    enemy = enemy_select(Orc(), Skeleton(), Bat())
+    enemy = enemy_select(Orc(), Bat())
     enemy.display()
 
+
     while player.health > 0:
-        player_attack()
+        attack(player, enemy)
         if enemy.is_dead() is True:
             if battle() is None:
                 break
-        enemy_attack()
-        player_is_dead()
+        attack(enemy, player)
+        player.is_dead()
 
+print(player.max_health)
 
 battle()
