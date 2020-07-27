@@ -1,14 +1,5 @@
-
-import time
 from Enemy import *
 from Character import *
-
-
-player_name = 'rem'
-player_stats = [40, 15, 5, 150, 20]
-
-player = Character(player_name, player_stats[0], player_stats[1],
-                   player_stats[2], player_stats[3], player_stats[4])
 
 
 def enemy_select(*args):
@@ -48,50 +39,77 @@ def attack(character, target):
         print(f"{character.name.title()} miss")
 
 
+class PointsAndKillCounts():
+    def __init__(self, orc_kills=0, bat_kills=0, skeleton_kills=0, orc_points=0, bat_points=0, skeleton_points=0, total_points=0):
+        self.orc_kills = orc_kills
+        self.bat_kills = bat_kills
+        self.skeleton_kills = skeleton_kills
+        self.orc_points = orc_points
+        self.bat_points = bat_points
+        self.skeleton_points = skeleton_points
+        self.total_points = total_points
+
+    def result(self, player):
+        print(f"""
+        {player.name.title()} defeated: 
+        - {self.orc_kills} orcs!
+        - {self.bat_kills} bats!
+        - {self.skeleton_kills} skeletons!
+
+        {player.name.title()} defetead:
+        - {self.orc_points} points from orcs,
+        - {self.bat_points} points from bats,
+        - {self.skeleton_points} points from skeletons. 
+
+        TOTAL: {self.total_points} points! 
+
+        Good luck next time!
+
+        """)
+
+        self.orc_kills = 0
+        self.bat_kills = 0
+        self.skeleton_kills = 0
+        self.orc_points = 0
+        self.bat_points = 0
+        self.skeleton_points = 0
+        self.total_points = 0
 
 
 def count():
-    orc_count = 0
-    bat_count = 0
-    skeleton_count = 0
-    total_count = 0
-
     if enemy.name.lower() == "orc":
-        orc_count += 1
+        points.orc_kills += 1
+        points.orc_points += enemy.points
+        points.total_points += enemy.points
+
+    elif enemy.name.lower() == "bat":
+        points.bat_kills += 1
+        points.bat_points += enemy.points
+        points.total_points += enemy.points
+
+    elif enemy.name.lower() == "skeleton":
+        points.skeleton_kills += 1
+        points.skeleton_points += enemy.points
+        points.total_points += enemy.points
+
+    else:
+        print("You defeated monster")
 
 
-    elif enemy.name == "bat":
-        bat_count += 1
-        return bat_count
-
-    elif enemy.name == "skeleton":
-        skeleton_count += 1
-
-    print(f"""
-             Your hero died but defeated: 
-
-             {orc_count} orcs, 
-              bats, 
-              skeletons.
-
-         """)
-
-
-def battle():
+points = PointsAndKillCounts()
+def battle(player):
 
     global enemy
-    enemy = enemy_select(Orc(), Bat())
+    enemy = enemy_select(Orc(), Bat(), Skeleton())
     enemy.display()
-
 
     while player.health > 0:
         attack(player, enemy)
         if enemy.is_dead() is True:
-            if battle() is None:
-                break
+            count()
+            return battle(player)
         attack(enemy, player)
-        player.is_dead()
+        if player.is_dead() is True:
+            points.result(player)
 
-print(player.max_health)
 
-battle()

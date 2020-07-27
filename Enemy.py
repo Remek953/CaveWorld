@@ -6,8 +6,6 @@ class Monster():
     """
     Class represents the enemy stats.
     """
-
-
     def __init__(self, name, base_attack, defense, max_health,
                  evade_chance, critical_chance, hit_chance, evade, points):
         self.name = name
@@ -20,9 +18,6 @@ class Monster():
         self.hit_chance = hit_chance
         self.evade = evade
         self.points = points
-
-
-
 
     def get_attack(self):
         attack = round(random.uniform(self.base_attack/2, self.base_attack))
@@ -48,22 +43,14 @@ class Monster():
             return True
         else:
             return False
-"""
+
     def count_kill(self):
-        if self.is_dead() is True:
-            point += self.points
-            print("test!!!!!!!!!!!!!")
-            return point
-        else:
-            return False
-
-"""
-
+            return self.points
 
 
 class Orc(Monster):
     def __init__(self):
-        super().__init__("Orc", 10, 5, 150, 5, 5, 15, 6, 5)
+        super().__init__("Orc", 10, 5, 150, 5, 5, 8, 6, 1)
 
     def display(self):
         print(" A dangerous orc has appeared!")
@@ -78,7 +65,7 @@ class Orc(Monster):
 
 class Bat(Monster):
     def __init__(self):
-        super().__init__("Bat", 20, 5, 150, 5, 5, 10, 6, 0)
+        super().__init__("Bat", 20, 5, 150, 5, 5, 8, 6, 2)
 
     def display(self):
         print(" A wicked bat has appeared!")
@@ -102,7 +89,7 @@ class Bat(Monster):
 
 class Skeleton(Monster):
     def __init__(self):
-        super().__init__("Skeleton", 15, 20, 100, 5, 5, 15, 0)
+        super().__init__("Skeleton", 15, 10, 100, 5, 5, 8, 6, 3)
 
 
     def display(self):

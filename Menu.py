@@ -1,6 +1,6 @@
-#  My first project: CaveWorld. It is a game with RPG elements and ASCII graphic.
-import sys
 import time
+import sys, os
+from Battle import *
 
 #Intro
 def display_intro():
@@ -26,13 +26,13 @@ def display_intro():
       .::..  ;   I;L\  /L\.  ..::..   /iL.           |         ..::::::::::::..
             ;    II;L\/LLLL;         / I;L\    \     |     / /\_   Collage by
                  II;..LLLLLL\    _._/ I;:.L\     \   |   / _/J; \    Bob Allison
-          :     IIIIi;..LLLLL\__/   IIII:..L\____  \###/  /JJI:  \
-        ,;     ILIi;;;:...:LLL;\      IIIII;.LLLLL\#####/JJ II;   \
+          :     IIIIi;..LLLLL\__/   IIII:..L\____  \###/  /JJI:  \\
+        ,;     ILIi;;;:...:LLL;\      IIIII;.LLLLL\#####/JJ II;   \\
        ;     I LLii;;;.:.. :LLL;\     III;;;::LLLLL\###/JJ IIII;   \_.
       :     IIILiii;;::.... :LLL;|      ;;I;;::.:LLLLLL:;IJ IIIII;:   \__.
-               IIIII IIii;;::;..;\          ;;:::...LLLL;IJIII;;    :::   \
-    :    ;    IIIIIIIIIii;;::.;..      _==|      ;..  :;IJIII;:::    ::    \
-        ;    ::::::::::::;;::..;  _==|   )__)  |                            \
+               IIIII IIii;;::;..;\          ;;:::...LLLL;IJIII;;    :::   \\
+    :    ;    IIIIIIIIIii;;::.;..      _==|      ;..  :;IJIII;:::    ::    \\
+        ;    ::::::::::::;;::..;  _==|   )__)  |                            \\
      '  '"  "  ""'""'""  ""'"  '"    )_)  )___) ))  ""''"   ""'"  "'" "'"'"'  "'""
             '""   ""^^       ^~   )___) )____))_)   ~~         ""^^^""  '  "  "~"
     ' ^^            ^        _    )____)_____))__)\      ~^~~^           ^^"
@@ -40,10 +40,10 @@ def display_intro():
        ''    '^          ~"~   \   oo oo oo oo     /      ~"      '~       ""~"
             ____   ^^^"~   ~~^^^^^^^^^^^^^^^^^^^^^^    ^~^            ^~^^^
           /  o   \     ""'"  __          __ "'"''     '   ''~     ~""~"`    ""''
-        < ____     \"'"    /    \   "' /    \       _          _    "~    _
+        < ____     \\"'"    /    \   "' /    \       _          _    "~    _
               |     |     |  __  |    |  __  |    /   \      /   \       / |
-        '''   |_____|  '  |__||__| '' |__||__| ' |_____| '' |_____| ""  /_/
-             '''     ~^^^^      '"""^^'''''^        '''''''""        '''''^^""
+        '     |_____|  '  |__||__|    |__||__| ' |_____| '' |_____| ""  /_/
+            ""  ~^^^^      '"""^^'''''        '''''''""        '''''^^""
        ''          '^^           ~^^~          ~^ '      ~~      '  ^   ^^^^^^^^
 
             ------------------------------------------------
@@ -52,14 +52,16 @@ def display_intro():
                
           
           ''')
-    time.sleep(1)
+    #time.sleep(1)
+    #os.system("cls")
+
 
 
 
 # Main menu
 
 def main_menu():
-
+    #display_intro()
     choice = None
 
     while choice != '4':
@@ -78,7 +80,11 @@ def main_menu():
 
         # NewGame
         if choice == "0":
-            pass
+
+            player = player23()
+            battle(player)
+
+            return main_menu()
 
         # Options
         elif choice == "1":
@@ -99,7 +105,11 @@ def main_menu():
 
         # Unknown choice
         else:
-            print("Sorry, but {} isn't a valid choice.".format(choice))
+            print(f"Sorry, but {choice} isn't a valid choice.")
+
+        points.result()
+
 
 #########################
 
+main_menu()

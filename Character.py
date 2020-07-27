@@ -11,7 +11,7 @@ class Character():
         self.strength = strength
         self.agility = agility
         self.luck = luck
-        self.max_health = (300 + 5 * vitality)
+        self.max_health = (30 + 5 * vitality)
         self.health = self.max_health
         self.defense = defense
         self.base_attack = 20
@@ -54,8 +54,9 @@ class Character():
         
         
                 """)
+            return True
         else:
-            pass
+            return False
 
 def create_name():
     name = input("What is your name:  ")
@@ -116,7 +117,7 @@ def choose_race():
     return race_stats
 
 
-def player_stats():
+def create_stats():
     os.system("cls")
 
     race_stats = choose_race()
@@ -282,6 +283,15 @@ def player_stats():
 
     return attributes['strength'], attributes['agility'], attributes['luck'], \
            attributes['vitality'], attributes['defense']
+
+
+def player23():
+    player_name = create_name()
+
+    player_stats = [40, 15, 5, 20, 20]
+    player = Character(player_name, player_stats[0], player_stats[1],
+                       player_stats[2], player_stats[3], player_stats[4])
+    return player
 
 
 def choose_class():
