@@ -1,6 +1,8 @@
 import time
 import sys, os
 from Battle import *
+from AboutMe import *
+from Scores import *
 
 #Intro
 def display_intro():
@@ -64,42 +66,44 @@ def main_menu():
     #display_intro()
     choice = None
 
-    while choice != '4':
+    while choice != '5':
 
         print(
                 """
         \tMenu
-        \t0 - New Game
-        \t1 - Options
-        \t2 - Scores
-        \t3 - About Me
-        \t4 - Exit
+        \t1 - New Game
+        \t2 - Options
+        \t3 - Scores
+        \t4 - About Me
+        \t5 - Exit
             """)
         choice = input("Choice: ")
         print()
 
         # NewGame
-        if choice == "0":
+        if choice == "1":
 
-            player = player23()
+            player = create_character()
             battle(player)
-
             return main_menu()
 
         # Options
-        elif choice == "1":
-            pass
-
-        # Scores
         elif choice == "2":
             pass
 
-        # About Me
+        # Scores
         elif choice == "3":
-            pass
+            scores_load()
+
+        # About Me
+        elif choice == "4":
+            about_me()
+            key = input('\t\t\t====press KEY to return====')
+            if key != "":
+                return main_menu()
 
         # Exit
-        elif choice == "4":
+        elif choice == "5":
             print("Goodbye!")
             sys.exit()
 
@@ -107,7 +111,6 @@ def main_menu():
         else:
             print(f"Sorry, but {choice} isn't a valid choice.")
 
-        points.result()
 
 
 #########################

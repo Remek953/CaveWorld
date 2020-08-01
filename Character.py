@@ -6,21 +6,27 @@ class Character():
     """
     Class represents the player character stats.
     """
-    def __init__(self, name, strength, agility, luck, vitality, defense):
+    def __init__(self, name, strength, agility, luck, vitality, defense, race):
         self.name = name
-        self.strength = strength
-        self.agility = agility
-        self.luck = luck
-        self.max_health = (30 + 5 * vitality)
-        self.health = self.max_health
-        self.defense = defense
+        self.strength = round(strength)
+        self.agility = round(agility)
+        self.luck = round(luck)
+        self.max_health = round((200 + 10 * vitality), 2)
+        self.health = round(self.max_health, 2)
+        self.defense = round(defense, 2)
         self.base_attack = 20
-        self.hit_chance = 7
+        self.hit_chance = round(random.uniform(4, 10), 2)
+        self.p_class = ""
+        self.race = race
 
     def get_attack(self):
         attack = round(random.uniform((self.base_attack + self.strength) / 2,
                                        self.base_attack + self.strength))
         return attack
+
+    def get_defense(self):
+        defense = self.defense / 2
+        return defense
 
     def get_hit_chance(self):
         return self.hit_chance
@@ -34,7 +40,7 @@ class Character():
         return critical
 
     def get_critical_dmg(self):
-        critical_dmg = 2 * self.get_attack()
+        critical_dmg = round(2 * self.get_attack(), 1)
         return critical_dmg
 
     def is_dead(self):
@@ -58,6 +64,23 @@ class Character():
         else:
             return False
 
+    def warrior(self):
+        self.p_class = "Warrior"
+        self.strength = self.strength * 1.1
+        self.defense = self.defense * 1.1
+
+    def rogue(self):
+        self.p_class = "Rogue"
+        self.agility = self.agility * 1.1
+        self.luck = self.luck * 1.1
+
+    def monk(self):
+        self.p_class = "Monk"
+        self.max_health = round(self.max_health * 1.1, 2)
+
+
+
+
 def create_name():
     name = input("What is your name:  ")
     while (len(name) < 1) and (len(name) > 12):
@@ -77,8 +100,8 @@ def choose_race():
     Strenght - +1 max dmg
     Agility - +1% dodge
     Luck - +1% critical dmg (2.5 x dmg)
-    Vitality - +5 vitality,
-    Defense - -1 dmg reduce
+    Vitality - +10 hitpoints,
+    Defense - -0.5 dmg reduce
     
     ''')
 
@@ -90,24 +113,24 @@ def choose_race():
 
     race_stats = {}
     while race_stats == {}:
-        if race == 'human':
+        if race.lower() == "human":
             stats = {'strength': 20, 'agility': 15, 'luck': 15,
-                     'vitality': 15, 'defense': 15}
+                     'vitality': 15, 'defense': 15, 'race': 'human'}
             race_stats.update(stats)
 
-        elif race == 'orc':
+        elif race.lower() == 'orc':
             stats = {'strength': 30, 'agility': 10, 'luck': 10,
-                     'vitality': 20, 'defense': 20}
+                     'vitality': 20, 'defense': 20, 'race': 'orc'}
             race_stats.update(stats)
 
-        elif race == 'elf':
+        elif race.lower() == 'elf':
             stats = {'strength': 10, 'agility': 30, 'luck': 10,
-                     'vitality': 25, 'defense': 15}
+                     'vitality': 25, 'defense': 15, 'race': 'elf'}
             race_stats.update(stats)
 
-        elif race == 'fairy':
+        elif race.lower() == 'fairy':
             stats = {'strength': 10, 'agility': 20, 'luck': 30,
-                     'vitality': 20, 'defense': 10}
+                     'vitality': 20, 'defense': 10, 'race': 'fairy'}
             race_stats.update(stats)
 
     print("\nYour character has the following attributes:")
@@ -124,48 +147,48 @@ def create_stats():
 
     print("""
         You have 40 points in a pool to spend as you wish on the attributes:
-            Strength, Agility, Luck, vitality, Defense
+            Strength, Agility, Luck, Vitality, Defense
         If you choose to, you can then take points from an attribute and put them back
         in the pool.
 
         Strenght - +1 min and max dmg,
         Agility - +1% evade,
         Luck - +1% critical chance dmg (2 x dmg),
-        vitality - +5 vitality,
+        vitality - +5 hitpoints,
         Defense - -1 dmg reduce
 
         """
           )
 
     attributes = copy.deepcopy(race_stats)
-    max_pool = 40
-    pool = 40
+    max_pool = 100
+    pool = 100
 
     choice = None
     choice_sentence = """
         \n\nWhat would you like to do?
-        0 - Start Game
         1 - Spend points on an attribute
         2 - Put points into pool
+        3 - Choose class
         """
 
     attribute_list = """
         \t - Strength
         \t - Agility
         \t - Luck
-        \t - vitality
+        \t - Vitality
         \t - Defense
         """
 
-    while choice != "0":
+    while choice != "3":
         print("\nYour character has the following attributes:")
         for attribute, points in attributes.items():
-            print("\t{} :  \t {}".format(attribute.title(), points))
+            print("\t{} :  \t\t {}".format(attribute.title(), points))
         print("\nThere are {} points in the pool.".format(pool))
         print(choice_sentence)
 
         choice = input("Choice: ")
-        while choice != "0" and choice != "1" and choice != "2":
+        while choice != "1" and choice != "2" and choice != "3":
             print("Invalid choice")
             print(choice_sentence)
             choice = input("Choice: ")
@@ -282,20 +305,44 @@ def create_stats():
             print("You now have {} points left in your pool.".format(pool))
 
     return attributes['strength'], attributes['agility'], attributes['luck'], \
-           attributes['vitality'], attributes['defense']
-
-
-def player23():
-    player_name = create_name()
-
-    player_stats = [40, 15, 5, 20, 20]
-    player = Character(player_name, player_stats[0], player_stats[1],
-                       player_stats[2], player_stats[3], player_stats[4])
-    return player
+           attributes['vitality'], attributes['defense'], race_stats['race']
 
 
 def choose_class():
-    # 1 - Warrior - +10% strength and +10% defence
-    # 2 - Rogue - +10% evade and +10% critical chance
-    # 3 - Monk - +20% vitality
-    pass
+
+    print("""Choose your class:
+    
+    1 - Warrior - +10% strength and +10% defence
+    2 - Rogue - +10% evade and +10% critical chance
+    3 - Monk - +10% max health
+    
+    """)
+
+    char_class = input("What is your characters class:  ")
+
+    while True:
+        if char_class == '1' or char_class.lower() == 'warrior':
+            return player.warrior()
+
+        elif char_class == '2' or char_class.lower() == 'rogue':
+            return player.rogue()
+
+        elif char_class == '3' or char_class.lower() == 'monk':
+            return player.monk()
+
+        else:
+            char_class = input("What is your characters class:  ")
+
+
+
+
+def create_character():
+    global player
+    player_name = create_name()
+    player_stats = create_stats()
+    player = Character(player_name, player_stats[0], player_stats[1],
+                       player_stats[2], player_stats[3], player_stats[4], player_stats[5])
+    choose_class()
+
+    return player
+
