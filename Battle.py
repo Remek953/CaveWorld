@@ -145,13 +145,13 @@ def save_scores(player):
     with open("Scores.csv", "a", newline="") as file_object:
         fieldnames = ["Name", "Race", "Class", "Kills", "Points"]
         csv_writer = csv.DictWriter(file_object, fieldnames=fieldnames)
-        csv_writer.writeheader()
 
         csv_writer.writerow({"Name": player.name, "Race": player.race, "Class": player.p_class,
                              "Kills": points.total_kills, "Points": points.total_points})
 
 def battle(player):
-
+    time.sleep(0.5)
+    os.system("cls")
     global enemy
     enemy = enemy_select(Orc(), Bat(), Skeleton(), Ant(), Scorpion())
     enemy.display()
@@ -159,14 +159,20 @@ def battle(player):
     while player.health > 0:
 
         attack(player, enemy)
+        time.sleep(0.3)
         if enemy.is_dead() is True:
             count()
             return battle(player)
 
         attack(enemy, player)
+        time.sleep(0.3)
+        print("\n")
         if player.is_dead() is True:
+            time.sleep(2)
             points.result(player)
+            time.sleep(6)
             save_scores(player)
             points.reset()
+            os.system("cls")
 
 

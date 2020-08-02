@@ -1,4 +1,5 @@
 import random
+import time
 
 
 
@@ -7,7 +8,7 @@ class Monster():
     Class represents the enemy stats.
     """
     def __init__(self, name, base_attack, defense, max_health,
-                  critical_chance, hit_chance, evade, points):
+                critical_chance, hit_chance, evade, points):
         self.name = name
         self.base_attack = base_attack
         self.defense = defense
@@ -26,10 +27,11 @@ class Monster():
         return self.defense
 
     def get_hit_chance(self):
-        return self.hit_chance
+        hit = round(random.uniform(1, self.hit_chance), 2)
+        return hit
 
     def get_evade_chance(self):
-        evade = self.evade
+        evade = round(random.uniform(1, self.evade), 2)
         return evade
 
     def get_critical_chance(self):
@@ -37,7 +39,7 @@ class Monster():
         return critical
 
     def get_critical_dmg(self):
-        critical_dmg = round(2 * self.get_attack(), 1)
+        critical_dmg = round(2 * self.get_attack())
         return critical_dmg
 
     def is_dead(self):
@@ -48,12 +50,12 @@ class Monster():
             return False
 
     def count_kill(self):
-            return self.points
+        return self.points
 
 
 class Orc(Monster):
     def __init__(self):
-        super().__init__("orc", 40, 25, 200, 6, 8, 3, 10)
+        super().__init__("orc", 50, 25, 200, 6, 9, 3, 10)
 
     def display(self):
         print(f" A dangerous {self.name} has appeared!")
@@ -63,12 +65,36 @@ class Orc(Monster):
                           |o\ /o)|
                           ( (  _')
                            (._.  /\__
-                           """)
+                          ,\___,/ '  ')
+            '.,_,,       (  .- .   .    )
+             \   \\\\     ( '        )(    )
+              \   \\\\    \.  _.__ ____( .  |
+               \  /\\\\   .(   .'  /\  '.  )
+                \(  \\\\.-' ( /    \/    \)
+                 '  ()) _'.-|/\/\/\/\/\|
+                     '\\\\ .( |\/\/\/\/\/|
+                       '((  \    /\    /
+                       ((((  '.__\/__.')
+                        ((,) /   ((()   )
+                         "..-,  (()("   /
+                    pils  _//.   ((() ."
+                  _____ //,/" ___ ((( ', ___
+                                   ((  )
+                                    / /
+                                  _/,/'
+                                /,/,"
+        
+        ------------------------------------------------
+        This ASCII pic can be found at
+        https://asciiart.website/index.php?art=creatures/monsters
+        
+        """)
+        time.sleep(0.8)
 
 
 class Bat(Monster):
     def __init__(self):
-        super().__init__("bat", 10, 5, 100, 4, 7, 5, 2)
+        super().__init__("bat", 20, 5, 100, 4, 9, 5, 2)
 
     def display(self):
         print(f" A wicked {self.name} has appeared!")
@@ -88,12 +114,12 @@ class Bat(Monster):
         https://asciiart.website/index.php?art=animals/bats
 
             """)
+        time.sleep(0.8)
 
 
 class Skeleton(Monster):
     def __init__(self):
-        super().__init__("skeleton", 25, 10, 200, 5, 7, 2, 5)
-
+        super().__init__("skeleton", 35, 10, 200, 5, 9, 2, 5)
 
     def display(self):
         print(f" A murderous {self.name} has appeared!")
@@ -116,11 +142,12 @@ class Skeleton(Monster):
             https://asciiart.website/index.php?art=people/skeletons
             
                 """)
+        time.sleep(0.8)
 
 
 class Ant(Monster):
     def __init__(self):
-        super().__init__("giant ant", 30, 25, 350, 4, 7, 4, 6)
+        super().__init__("giant ant", 40, 25, 350, 4, 9, 4, 8)
 
     def display(self):
         print(f" A {self.name} has appeared!")
@@ -144,11 +171,12 @@ class Ant(Monster):
 
 
                 """)
+        time.sleep(0.8)
 
 
 class Scorpion(Monster):
     def __init__(self):
-        super().__init__("deadly scorpion", 60, 5, 75, 7, 7, 6, 8)
+        super().__init__("deadly scorpion", 70, 5, 75, 7, 9, 8, 6)
 
     def display(self):
         print(f" A {self.name} has appeared!")
@@ -172,40 +200,7 @@ class Scorpion(Monster):
         https://asciiart.website/index.php?art=animals/scorpions
         
                 """)
-
-
-def display_orc():
-    print(" A dangerous orc has appeared!")
-    print("""
-                    (    )
-                  ((((()))
-                  |o\ /o)|
-                  ( (  _')
-                   (._.  /\__
-                  ,\___,/ '  ')
-    '.,_,,       (  .- .   .    )
-     \   \\\\     ( '        )(    )
-      \   \\\\    \.  _.__ ____( .  |
-       \  /\\\\   .(   .'  /\  '.  )
-        \(  \\\\.-' ( /    \/    \)
-         '  ()) _'.-|/\/\/\/\/\|
-             '\\\\ .( |\/\/\/\/\/|
-               '((  \    /\    /
-               ((((  '.__\/__.')
-                ((,) /   ((()   )
-                 "..-,  (()("   /
-            pils  _//.   ((() ."
-          _____ //,/" ___ ((( ', ___
-                           ((  )
-                            / /
-                          _/,/'
-                        /,/,"
-
-------------------------------------------------
-This ASCII pic can be found at
-https://asciiart.website/index.php?art=creatures/monsters
-
-    """)
+        time.sleep(0.8)
 
 
 

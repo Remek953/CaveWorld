@@ -1,27 +1,30 @@
-import time
-import sys, os
+
+import sys
 from Battle import *
 from AboutMe import *
 from Scores import *
 
 #Intro
-def display_intro():
+def display_intro1():
     print('''
-   
-    - --+--------------------------------------------------------------------+-- -  
-        |                                                                    |    
-        |   __                 _      _                                      |    
-        |  / _|  _        _   | \    / |  _   _       _                      |    
-        | | |_  |_| |  | |_   |  \/\/  | | | |_| ||  | \                     |    
-        |  \__| | |  \/  |_   |___/\___| |_| | \ ||_ |_/                     |    
-        |                                                                    |    
-        | ==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--== |    
-        |      Hello Adventurer!               Welcome to CaveWorld!         |
-        |                                                                    |    
-    - --+--------------------------------------------------------------------+-- -
-        '                                                                    '     
-          
-          
+--+--------------------------------------------------------------------+-- 
+  |                                                                    |    
+  |   __                 _      _                                      |    
+  |  / _|  _        _   | \    / |  _   _       _                      |    
+  | | |_  |_| |  | |_   |  \/\/  | | | |_| ||  | \                     |    
+  |  \__| | |  \/  |_   |___/\___| |_| | \ ||_ |_/                     |    
+  |                                                                    |    
+  | ==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--== |    
+  |      Hello Adventurer!               Welcome to CaveWorld!         |
+  |                                                                    |    
+--+--------------------------------------------------------------------+--
+  '                                                                    '     ''')
+    time.sleep(2)
+    os.system("cls")
+
+def display_intro2():
+        print('''
+
                  .......::::::::::::)..           .......................(::::::........
           .:::::;;;;;;;;):::::::.... .           .......:::::::::::::<......
               <  >>>                   ,.
@@ -54,8 +57,8 @@ def display_intro():
                
           
           ''')
-    #time.sleep(1)
-    #os.system("cls")
+        time.sleep(2)
+        os.system("cls")
 
 
 
@@ -63,19 +66,26 @@ def display_intro():
 # Main menu
 
 def main_menu():
-    #display_intro()
+    display_intro1()
+    display_intro2()
     choice = None
 
-    while choice != '5':
+    while choice != '4':
 
         print(
                 """
-        \tMenu
-        \t1 - New Game
-        \t2 - Options
-        \t3 - Scores
-        \t4 - About Me
-        \t5 - Exit
+        --------------------
+        |       Menu       |
+        --------------------
+        |   1 - New Game   |
+        --------------------
+        |   2 - Scores     |
+        --------------------
+        |   3 - About Me   |
+        --------------------
+        |   4 - Exit       |
+        --------------------
+
             """)
         choice = input("Choice: ")
         print()
@@ -87,23 +97,19 @@ def main_menu():
             battle(player)
             return main_menu()
 
-        # Options
-        elif choice == "2":
-            pass
-
         # Scores
-        elif choice == "3":
+        elif choice == "2":
             scores_load()
 
         # About Me
-        elif choice == "4":
+        elif choice == "3":
             about_me()
             key = input('\t\t\t====press KEY to return====')
             if key != "":
                 return main_menu()
 
         # Exit
-        elif choice == "5":
+        elif choice == "4":
             print("Goodbye!")
             sys.exit()
 
@@ -112,7 +118,5 @@ def main_menu():
             print(f"Sorry, but {choice} isn't a valid choice.")
 
 
-
-#########################
-
-main_menu()
+if __name__ == "__main__":
+    main_menu()

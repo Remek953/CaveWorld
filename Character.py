@@ -1,6 +1,7 @@
 import copy
 import os
 import random
+import time
 
 class Character():
     """
@@ -8,14 +9,14 @@ class Character():
     """
     def __init__(self, name, strength, agility, luck, vitality, defense, race):
         self.name = name
-        self.strength = round(strength)
-        self.agility = round(agility)
-        self.luck = round(luck)
-        self.max_health = round((200 + 10 * vitality), 2)
+        self.strength = strength
+        self.agility = agility
+        self.luck = luck
+        self.max_health = round((100 + 10 * vitality), 2)
         self.health = round(self.max_health, 2)
-        self.defense = round(defense, 2)
+        self.defense = defense
         self.base_attack = 20
-        self.hit_chance = round(random.uniform(4, 10), 2)
+        self.hit_chance = round(random.uniform(1, 10), 2)
         self.p_class = ""
         self.race = race
 
@@ -25,11 +26,11 @@ class Character():
         return attack
 
     def get_defense(self):
-        defense = self.defense / 2
+        defense = self.defense / 5
         return defense
 
     def get_hit_chance(self):
-        return self.hit_chance
+        return self.hit_chance + self.agility * 0.01
 
     def get_evade_chance(self):
         evade = round(random.uniform(0, 10), 2) + self.agility * 0.01
@@ -46,18 +47,12 @@ class Character():
     def is_dead(self):
         if self.health <= 0:
             print("""
-        
-        
-        
-                ____    ____  ______    __    __      _______   __   _______  _______  
-                \   \  /   / /  __  \  |  |  |  |    |       \ |  | |   ____||       \ 
-                 \   \/   / |  |  |  | |  |  |  |    |  .--.  ||  | |  |__   |  .--.  |
-                  \_    _/  |  |  |  | |  |  |  |    |  |  |  ||  | |   __|  |  |  |  |
-                    |  |    |  `--'  | |  `--'  |    |  '--'  ||  | |  |____ |  '--'  |
-                    |__|     \______/   \______/     |_______/ |__| |_______||_______/ 
-        
-        
-        
+    ____    ____  ______    __    __      _______   __   _______  _______  
+    \   \  /   / /  __  \  |  |  |  |    |       \ |  | |   ____||       \ 
+     \   \/   / |  |  |  | |  |  |  |    |  .--.  ||  | |  |__   |  .--.  |
+      \_    _/  |  |  |  | |  |  |  |    |  |  |  ||  | |   __|  |  |  |  |
+        |  |    |  `--'  | |  `--'  |    |  '--'  ||  | |  |____ |  '--'  |
+        |__|     \______/   \______/     |_______/ |__| |_______||_______/ 
         
                 """)
             return True
@@ -92,16 +87,27 @@ def create_name():
 
 def choose_race():
     print('''Choose your race: 
-    Human -  \t20 strength \t15 agility \t15 luck \t15 vitality \t15 defense
-    Orc -    \t30 strength \t10 agility \t10 luck \t20 vitality \t20 defense
-    Elf -    \t10 strength \t30 agility \t10 luck \t25 vitality \t15 defense
-    Fairy -  \t10 strength \t20 agility \t30 luck \t25 vitality \t15 defense
+|----------------------------------------------------------------------|
+|Human | 20 strength - 15 agility - 15 luck - 15 vitality - 15 defense |
+|----------------------------------------------------------------------|
+|Orc   | 30 strength - 10 agility - 10 luck - 20 vitality - 20 defense |
+|----------------------------------------------------------------------|
+|Elf   | 10 strength - 30 agility - 10 luck - 25 vitality - 15 defense |
+|----------------------------------------------------------------------|
+|Fairy | 10 strength - 20 agility - 30 luck - 25 vitality - 15 defense |
+|----------------------------------------------------------------------|
 
-    Strenght - +1 max dmg
-    Agility - +1% dodge
-    Luck - +1% critical dmg (2.5 x dmg)
-    Vitality - +10 hitpoints,
-    Defense - -0.5 dmg reduce
+        ------------------------------------------
+        |   Strenght - +1 max dmg                |
+        ------------------------------------------
+        |   Agility - +1% evade, +1% hit chance  |
+        ------------------------------------------
+        |   Luck - +1% critical chance (2 x dmg) |
+        ------------------------------------------
+        |   Vitality - +10 hitpoints             |
+        ------------------------------------------
+        |   Defense - -0.2 dmg reduce            |
+        ------------------------------------------
     
     ''')
 
@@ -132,30 +138,28 @@ def choose_race():
             stats = {'strength': 10, 'agility': 20, 'luck': 30,
                      'vitality': 20, 'defense': 10, 'race': 'fairy'}
             race_stats.update(stats)
-
-    print("\nYour character has the following attributes:")
-    for attribute, points in race_stats.items():
-        print("\t{} :  \t {}".format(attribute.title(), points))
+    time.sleep(0.5)
+    os.system("cls")
 
     return race_stats
 
 
 def create_stats():
+    time.sleep(0.5)
     os.system("cls")
 
     race_stats = choose_race()
 
     print("""
-        You have 40 points in a pool to spend as you wish on the attributes:
-            Strength, Agility, Luck, Vitality, Defense
-        If you choose to, you can then take points from an attribute and put them back
-        in the pool.
+You have 100 points in a pool to spend as you wish on the attributes:
 
         Strenght - +1 min and max dmg,
-        Agility - +1% evade,
+        Agility - +1% evade, +1% hit chance
         Luck - +1% critical chance dmg (2 x dmg),
-        vitality - +5 hitpoints,
-        Defense - -1 dmg reduce
+        vitality - +10 hitpoints,
+        Defense - -0.2 dmg reduce.
+        
+If you choose to, you can then take points from an attribute and put them back in the pool.
 
         """
           )
@@ -181,9 +185,7 @@ def create_stats():
         """
 
     while choice != "3":
-        print("\nYour character has the following attributes:")
-        for attribute, points in attributes.items():
-            print("\t{} :  \t\t {}".format(attribute.title(), points))
+
         print("\nThere are {} points in the pool.".format(pool))
         print(choice_sentence)
 
@@ -309,6 +311,8 @@ def create_stats():
 
 
 def choose_class():
+    time.sleep(0.5)
+    os.system("cls")
 
     print("""Choose your class:
     
@@ -332,8 +336,6 @@ def choose_class():
 
         else:
             char_class = input("What is your characters class:  ")
-
-
 
 
 def create_character():
