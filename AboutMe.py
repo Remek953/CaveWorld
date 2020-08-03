@@ -30,7 +30,6 @@ and reading about Python, I started my first project.
 I hope you will enjoy my game and I will be waiting for your feedback. :) 
     
 github: https://github.com/Remek953
-mail: remek.kosiorek@gmail.com
     
 ASCII graphics from https://asciiart.website/
 ASCII text from http://patorjk.com/blog/
