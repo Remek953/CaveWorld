@@ -4,18 +4,18 @@ import random
 import time
 
 
-class Character():
+class Character:
 
     """
     Class represents the player character stats.
     """
 
-    def __init__(self, name, strength, agility, luck, vitality, defense, race):
+    def __init__(self, name, strength, agility, dexterity, vitality, defense, race):
 
         self.name = name
         self.strength = strength
         self.agility = agility
-        self.luck = luck
+        self.dexterity = dexterity
         self.max_health = round((100 + 5 * vitality), 2)
         self.health = round(self.max_health, 2)
         self.defense = defense
@@ -45,7 +45,7 @@ class Character():
 
     def get_critical_chance(self):
 
-        critical = round(random.uniform(0, 10), 2) + self.luck * 0.01
+        critical = round(random.uniform(0, 10), 2) + self.dexterity * 0.01
         return critical
 
     def get_critical_dmg(self):
@@ -79,12 +79,12 @@ class Character():
 
         self.p_class = "Rogue"
         self.agility = self.agility * 1.1
-        self.luck = self.luck * 1.1
+        self.dexterity = self.dexterity * 1.1
 
     def monk(self):
 
         self.p_class = "Monk"
-        self.max_health = round(self.max_health * 1.1, 2)
+        self.max_health = round(self.max_health * 1.2, 2)
 
 
 def create_name():
@@ -101,29 +101,29 @@ def create_name():
 def choose_race():
 
     print('''
-|----------------------------------------------------------------------|
-|                        Choose your race:                             |
-|----------------------------------------------------------------------|
-|Human | 20 strength - 15 agility - 15 luck - 15 vitality - 15 defense |
-|----------------------------------------------------------------------|
-|Orc   | 30 strength - 10 agility - 10 luck - 20 vitality - 20 defense |
-|----------------------------------------------------------------------|
-|Elf   | 10 strength - 30 agility - 10 luck - 25 vitality - 15 defense |
-|----------------------------------------------------------------------|
-|Fairy | 10 strength - 20 agility - 30 luck - 25 vitality - 15 defense |
-|----------------------------------------------------------------------|
+|---------------------------------------------------------------------------|
+|                        Choose your race:                                  |
+|---------------------------------------------------------------------------|
+|Human | 20 strength - 15 agility - 15 dexterity - 15 vitality - 15 defense |
+|---------------------------------------------------------------------------|
+|Orc   | 30 strength - 10 agility - 10 dexterity - 20 vitality - 20 defense |
+|---------------------------------------------------------------------------|
+|Elf   | 10 strength - 30 agility - 10 dexterity - 25 vitality - 15 defense |
+|---------------------------------------------------------------------------|
+|Fairy | 10 strength - 20 agility - 30 dexterity - 25 vitality - 15 defense |
+|---------------------------------------------------------------------------|
 
-            ------------------------------------------
-            |   Strength - +1 min and max dmg        |
-            ------------------------------------------
-            |   Agility - +1% evade, +1% hit chance  |
-            ------------------------------------------
-            |   Luck - +1% critical chance (2 x dmg) |
-            ------------------------------------------
-            |   Vitality - +5 hitpoints              |
-            ------------------------------------------
-            |   Defense - -0.2 dmg reduce            |
-            ------------------------------------------
+            -------------------------------------------------
+            |   Strength  - +1 min and max dmg              |
+            -------------------------------------------------
+            |   Agility   - +1% evade, +1% hit chance       |
+            -------------------------------------------------
+            |   Dexterity - +1% critical chance (2 x dmg)   |
+            -------------------------------------------------
+            |   Vitality  - +5 hitpoints                    |
+            -------------------------------------------------
+            |   Defense   - -0.2 dmg reduce                 |
+            -------------------------------------------------
     
     ''')
 
@@ -138,22 +138,22 @@ def choose_race():
     # Race stats
     while race_stats == {}:
         if race.lower() == "human":
-            stats = {'strength': 20, 'agility': 15, 'luck': 15,
+            stats = {'strength': 20, 'agility': 15, 'dexterity': 15,
                      'vitality': 15, 'defense': 15, 'race': 'human'}
             race_stats.update(stats)
 
         elif race.lower() == 'orc':
-            stats = {'strength': 30, 'agility': 10, 'luck': 10,
+            stats = {'strength': 30, 'agility': 10, 'dexterity': 10,
                      'vitality': 20, 'defense': 20, 'race': 'orc'}
             race_stats.update(stats)
 
         elif race.lower() == 'elf':
-            stats = {'strength': 10, 'agility': 30, 'luck': 10,
+            stats = {'strength': 10, 'agility': 30, 'dexterity': 10,
                      'vitality': 25, 'defense': 15, 'race': 'elf'}
             race_stats.update(stats)
 
         elif race.lower() == 'fairy':
-            stats = {'strength': 10, 'agility': 20, 'luck': 30,
+            stats = {'strength': 10, 'agility': 20, 'dexterity': 30,
                      'vitality': 20, 'defense': 10, 'race': 'fairy'}
             race_stats.update(stats)
     time.sleep(0.5)
@@ -172,11 +172,17 @@ def create_stats():
     print("""
 You have 100 points in a pool to spend as you wish on the attributes:
 
-        Strength - +1 min and max dmg,
-        Agility - +1% evade, +1% hit chance
-        Luck - +1% critical chance dmg (2 x dmg),
-        Vitality - +5 hitpoints,
-        Defense - -0.2 dmg reduce.
+            -------------------------------------------------
+            |   Strength  - +1 min and max dmg              |
+            -------------------------------------------------
+            |   Agility   - +1% evade, +1% hit chance       |
+            -------------------------------------------------
+            |   Dexterity - +1% critical chance (2 x dmg)   |
+            -------------------------------------------------
+            |   Vitality  - +5 hitpoints                    |
+            -------------------------------------------------
+            |   Defense   - -0.2 dmg reduce                 |
+            -------------------------------------------------
         
 If you choose to, you can then take points from an attribute and put them back in the pool.
 
@@ -199,14 +205,14 @@ If you choose to, you can then take points from an attribute and put them back i
     attribute_list = """
         \t - Strength
         \t - Agility
-        \t - Luck
+        \t - Dexterity
         \t - Vitality
         \t - Defense
         """
 
     while choice != "3":
 
-        print("\nThere are {} points in the pool.".format(pool))
+        print(f"\nThere are {pool} points in the pool.")
         print(choice_sentence)
 
         choice = input("Choice: ")
@@ -221,7 +227,7 @@ If you choose to, you can then take points from an attribute and put them back i
             if pool == 0:
                 print("Sorry, you don't have enough points.")
                 break
-            print("\nYou have {} points left in pool.".format(pool))
+            print(f"\nYou have {pool} points left in pool.")
             print("\nWhich attribute would you like to add to?")
             print(attribute_list)
 
@@ -229,7 +235,7 @@ If you choose to, you can then take points from an attribute and put them back i
             while (
                    change_attributes.lower() != "strength" and
                    change_attributes.lower() != "agility" and
-                   change_attributes.lower() != "luck" and
+                   change_attributes.lower() != "dexterity" and
                    change_attributes.lower() != "vitality" and
                    change_attributes.lower() != "defense"
             ):
@@ -240,14 +246,14 @@ If you choose to, you can then take points from an attribute and put them back i
             else:
                 points = int(input("How many points would you like to spend?: "))
                 while points > pool:
-                    print("That's too many points. You have {} to spend".format(pool))
+                    print(f"That's too many points. You have {pool} to spend")
                     points = int(input("How many points would you like to spend?: "))
 
             attributes[change_attributes.lower()] += points
             pool -= points
             print("\nYour attributes")
             for attribute, points in attributes.items():
-                print("\t{} :  \t {}".format(attribute.title(), points))
+                print(f"\t{attribute.title()}:\t{points}")
             if pool == 0:
                 print("\nYou've spent all your points.")
                 choice = None
@@ -272,19 +278,19 @@ If you choose to, you can then take points from an attribute and put them back i
 
             print("\nWhich attribute would you like to take points out of?")
             for attribute, points in attributes.items():
-                print("\t{} :  \t {}".format(attribute.title(), points))
+                print(f"\t{attribute.title()}:  \t{points}")
             change_attributes = input("Choice: ")
             while (
                     change_attributes.lower() != "strength" and
                     change_attributes.lower() != "agility" and
-                    change_attributes.lower() != "luck" and
+                    change_attributes.lower() != "dexterity" and
                     change_attributes.lower() != "vitality" and
                     change_attributes.lower() != "defense"
             ):
                 print("\nThat is an invalid choice.")
                 print("\nWhich attribute would you like to take points out of?")
                 for attribute, points in attributes.items():
-                    print("\t{} :  \t {}".format(attribute.title(), points))
+                    print(f"\t{attribute.title()}:  \t{points}")
                 change_attributes = input("Choice: ")
 
             # Pool of points is zero
@@ -296,7 +302,7 @@ If you choose to, you can then take points from an attribute and put them back i
                 while (
                         change_attributes.lower() != "strength" and
                         change_attributes.lower() != "agility" and
-                        change_attributes.lower() != "luck" and
+                        change_attributes.lower() != "dexterity" and
                         change_attributes.lower() != "vitality" and
                         change_attributes.lower() != "defense"
                 ):
@@ -308,8 +314,8 @@ If you choose to, you can then take points from an attribute and put them back i
             # Not enough points in attribute
             while points > attributes[change_attributes.lower()]:
 
-                print("Sorry, that's too many points! You only have {} "
-                      "in {} ".format(attributes[change_attributes.lower()], change_attributes.lower()))
+                print(f"Sorry, that's too many points! You only have {attributes[change_attributes.lower()]} "
+                      f"in {change_attributes.lower()} ")
                 points = int(input("\nHow many points would you like to remove?: "))
 
             check_stats = attributes[change_attributes.lower()] - points
@@ -317,8 +323,8 @@ If you choose to, you can then take points from an attribute and put them back i
             # Cant change constant value in race_stats
             while check_stats < race_stats[change_attributes.lower()]:
 
-                print("Sorry, You cant change basic race stats. Your race stat is {} "
-                      "in {}. ".format(race_stats[change_attributes.lower()], change_attributes.lower()))
+                print(f"Sorry, You cant change basic race stats. Your race stat is "
+                      f"{race_stats[change_attributes.lower()]} in {change_attributes.lower()}.")
                 points = 0
                 choice = '2'
                 break
@@ -336,9 +342,9 @@ If you choose to, you can then take points from an attribute and put them back i
             print("Alright!")
             pool += points
             attributes[change_attributes.lower()] -= points
-            print("You now have {} points left in your pool.".format(pool))
+            print(f"You now have {pool} points left in your pool.")
 
-    return attributes['strength'], attributes['agility'], attributes['luck'], \
+    return attributes['strength'], attributes['agility'], attributes['dexterity'], \
            attributes['vitality'], attributes['defense'], race_stats['race']
 
 
@@ -347,12 +353,60 @@ def choose_class():
     time.sleep(0.5)
     os.system("cls")
 
-    print("""Choose your class:
+    print("""
+              Choose your class:
+----------------------------------------------------- 
+
+             /'
+             ||
+             ||      ** *
+             ||      __X_
+             ||     ( ___\\
+             ||     |:  \\\\
+            ><><  ___)..:/_#__,
+            (X|) (|+(____)+\ _)
+             o|_\/>> + + + << \\
+               |:\/|+ + + +| \_\<
+               \./  XXXXXX.  (o_)_
+                   /+ + + |   \:|  b'ger
+
+    1 - Warrior - +10% strength
+                  +10% defence
     
-    1 - Warrior - +10% strength and +10% defence
-    2 - Rogue - +10% evade and +10% critical chance
-    3 - Monk - +10% max health
+-----------------------------------------------------     
+   
+                    |  |
+                    |--|
+                    |  |
+                  _.+  +._
+                 /\,)    /\\
+                :  `-._.'  ;
+                |      "*--|
+                | \        |
+                |  `.      ;
+                :         /|
+                |\      -' | bug
+                    
+   
+    2 - Rogue - +10% evade 
+                +10% hit chance 
+                +10% critical chance
     
+-----------------------------------------------------  
+                   ___
+                 //|||\\\\
+                 /|^,^|\\\\
+                 ||\-/|||    
+                 \\\\| ||||    
+                /|-----|\\
+               |\|  &  |/|
+               | |     | |
+               | |     | |   Ramon Herrera
+
+
+    3 - Monk - +20% max health
+    
+-----------------------------------------------------    
     """)
 
     char_class = input("What is your characters class:  ")

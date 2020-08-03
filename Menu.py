@@ -121,6 +121,7 @@ def main_menu():
         # Exit
         elif choice == "4":
             print("Goodbye!")
+            time.sleep(1)
             sys.exit()
 
         # Unknown choice

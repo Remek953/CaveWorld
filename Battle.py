@@ -5,6 +5,8 @@ import csv
 
 def battle_intro():
 
+    os.system("cls")
+
     """ 3 different random intros to the game """
 
     b_intro = random.randint(1, 3)
@@ -64,8 +66,10 @@ Good Luck!
         https://asciiart.website/index.php?art=places/stonehenge
 
 15 years ago, the first “dungeon” that connected the real world with the monster world opened.
-People received the power to hunt monsters within the dungeon. They are known as "Adventurers".
-You have to enter to the first "A+" level dungeon to find legendary sword and save the world from monsters.
+People received the power to hunt monsters within the dungeon. 
+They are known as "Adventurers".
+Enter the first "A+" level dungeon: CaveWorld.
+Find the legendary sword and save the world from monsters.
 
 Good Luck!
 

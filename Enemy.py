@@ -175,7 +175,6 @@ class Ant(Monster):
             MJP     ('    ('       ')
             
             ------------------------------------------------
-            Thank you for visiting https://asciiart.website/
             This ASCII pic can be found at
             https://asciiart.website/index.php?art=animals/insects/ants
 
@@ -206,7 +205,6 @@ class Scorpion(Monster):
                     ^  ^  ^  ^     `-.....--'''
         
         ------------------------------------------------
-        Thank you for visiting https://asciiart.website/
         This ASCII pic can be found at
         https://asciiart.website/index.php?art=animals/scorpions
         
