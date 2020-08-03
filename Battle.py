@@ -3,7 +3,110 @@ from Character import *
 import csv
 
 
+def battle_intro():
+
+    """ 3 different random intros to the game """
+
+    b_intro = random.randint(1, 3)
+
+    if b_intro == 1:
+
+        print('''
+        
+                         ______________
+                   ,===:'.,            `-._
+                        `:.`---.__         `-._
+                          `:.     `--.         `.
+                            \.        `.         `.
+                    (,,(,    \.         `.   ____,-`.,
+                 (,'     `/   \.   ,--.___`.'
+             ,  ,'  ,--.  `,   \.;'         `
+              `{D, {    \  :    \;
+                V,,'    /  /    //
+                j;;    /  ,' ,-//.    ,---.      ,
+                \;'   /  ,' /  _  \  /  _  \   ,'/
+                      \   `'  / \  `'  / \  `.' /
+                       `.___,'   `.__,'   `.__,'  John VanderZwaag
+            
+            ------------------------------------------------
+            This ASCII pic can be found at
+            https://asciiart.website/index.php?art=creatures/dragons
+
+
+The world is in chaos and no one can stop you from gain glory and fame.
+Use your magnificent and innate skills to kill as many monsters as possible.
+
+Good Luck!
+
+
+        ''')
+        time.sleep(5)
+        os.system("cls")
+
+    elif b_intro == 2:
+
+        print('''
+        #####################################################
+        #######_#########################################DWB#
+        ######/ \#####_________######_______#################
+        #####|\ /|###(_________)####(_______)###_____###__###
+        #####| V |###|  |###|  |####|  \#/  |##(_____)#(__)##
+        #####| | |___|   |##|  |_###|   |   |#|  \#/ |#\  |##
+        ###__| | |___|   |##|  | |##|   |   |#|  |#| |#|  |##
+        ##(__| | | V_|   |##|  | |##|   |   ||   |#| |#|  |##
+        ##||#| | |_/_|    |/   | |#|    |   ||   ||  |#|  |##
+        ##||#| | |###|    /    |###|    |   |    |   |#|  |##
+        `````````````````````````````````````````````````````
+        
+        
+        ------------------------------------------------
+        This ASCII pic can be found at
+        https://asciiart.website/index.php?art=places/stonehenge
+
+15 years ago, the first “dungeon” that connected the real world with the monster world opened.
+People received the power to hunt monsters within the dungeon. They are known as "Adventurers".
+You have to enter to the first "A+" level dungeon to find legendary sword and save the world from monsters.
+
+Good Luck!
+
+        ''')
+        time.sleep(5)
+        os.system("cls")
+
+    elif b_intro == 3:
+
+        print('''
+        
+                                  ================================
+                   /__\            ||     ||<(.)>||<(.)>||     ||
+       ____________|  |            ||    _||     ||     ||_    ||
+       |_|_|_|_|_|_|  |            ||   (__D     ||     C__)   ||
+       |_|_|_|_|_|_|__|            ||   (__D     ||     C__)   ||
+      A@\|_|_|_|_|_|/@@Aa          ||   (__D     ||     C__)   ||
+   aaA@@@@@@@@@@@@@@@@@@@aaaA      ||   (__D     ||     C__)   ||
+  A@@@@@@@@@@@DWB@@@@@@@@@@@@A     ||     ||     ||     ||  dwb||
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ================================
+
+        ------------------------------------------------
+        This ASCII pic can be found at
+        https://asciiart.website/index.php?art=places/alcatraz
+
+
+You was wrongly accused of murder. You have been sent to The CaveWorld. 
+The most dangerous prison on the world. 
+You will spend the rest of your life in that place. 
+Escape from prison and prove your innocent.
+
+Good Luck!
+        
+        ''')
+        time.sleep(5)
+        os.system("cls")
+
+
+# Enemy select from list of monsters
 def enemy_select(*args):
+
     enemy_list = [*args]
     length_list = (len(enemy_list))-1
     enemy_chance = random.randint(0, length_list)
@@ -11,7 +114,9 @@ def enemy_select(*args):
     return enemy_1
 
 
+# Battle system
 def attack(character, target):
+
     character_damage = character.get_attack() - target.get_defense()
     character_crit_damage = character.get_critical_dmg() - target.get_defense()
     hit_crit_chance = round(random.uniform(0, 10), 2)
@@ -24,23 +129,25 @@ def attack(character, target):
 
             else:
                 target.health -= character_crit_damage
-                print(f"{character.name.title()} deal critical {character_crit_damage} dmg! "
-                      f"{target.name.title()} has {target.health}/{target.max_health} health.")
+                print(f"{character.name.title()} deal critical {round(character_crit_damage)} dmg! "
+                      f"{target.name.title()} has {round(target.health)}/{target.max_health} health.")
                 return target.health
 
         elif character_damage <= 0:
-                print(f"Nice! {target.name.title()} has invincible defense! {target.name.title()} takes 0 dmg!")
+            print(f"Nice! {target.name.title()} has invincible defense! {target.name.title()} takes 0 dmg!")
 
         else:
             target.health -= character_damage
-            print(f"{character.name.title()} deal {character_damage} dmg. "
-                  f"{target.name.title()} has {target.health}/{target.max_health} health.")
+            print(f"{character.name.title()} deal {round(character_damage)} dmg. "
+                  f"{target.name.title()} has {round(target.health)}/{target.max_health} health.")
             return target.health
     else:
-        print(f"{character.name.title()} miss")
+        print(f"{character.name.title()} takes huge swing and miss!")
 
 
-class PointsAndKillCounts():
+# Scoreboard: kills and points from monsters
+class Scoreboard:
+
     def __init__(self, orc_kills=0, bat_kills=0, skeleton_kills=0, ant_kills=0, scorpion_kills=0, total_kills=0,
                  orc_points=0, bat_points=0, skeleton_points=0, ant_points=0, scorpion_points=0, total_points=0,):
 
@@ -81,29 +188,32 @@ class PointsAndKillCounts():
     def result(self, player):
 
         print(f"""
-        {player.name.title()} defeated: 
-        - {self.orc_kills} orcs,
-        - {self.bat_kills} bats,
-        - {self.skeleton_kills} skeletons,
-        - {self.ant_kills} ants,
-        - {self.scorpion_kills} scorpions.
+{player.name.title()} defeated: 
+- {self.orc_kills} orcs,
+- {self.bat_kills} bats,
+- {self.skeleton_kills} skeletons,
+- {self.ant_kills} ants,
+- {self.scorpion_kills} scorpions.
 
-        You killed {self.total_kills}!
+{player.name.title()} defeated {self.total_kills} monsters!
 
-        {player.name.title()} got:
-        - {self.orc_points} points from orcs,
-        - {self.bat_points} points from bats,
-        - {self.skeleton_points} points from skeletons. 
-        - {self.ant_points} points from ants. 
-        - {self.scorpion_points} points from scorpions. 
+{player.name.title()} received:
+- {self.orc_points} points from orcs,
+- {self.bat_points} points from bats,
+- {self.skeleton_points} points from skeletons. 
+- {self.ant_points} points from ants. 
+- {self.scorpion_points} points from scorpions. 
 
-        TOTAL: {self.total_points} points! 
+{player.name.title()} has {self.total_points} points! 
 
-        Good luck next time!
+Good luck next time!
 
         """)
 
+
+# Kills and points count
 def count():
+
     if enemy.name.lower() == Orc().name.lower():
         points.orc_kills += 1
         points.total_kills += 1
@@ -138,10 +248,13 @@ def count():
         print("You defeated monster")
 
 
-points = PointsAndKillCounts()
+# Assignment scoreboard to variable
+points = Scoreboard()
 
 
+# Save scores to Scores.csv
 def save_scores(player):
+
     with open("Scores.csv", "a", newline="") as file_object:
         fieldnames = ["Name", "Race", "Class", "Kills", "Points"]
         csv_writer = csv.DictWriter(file_object, fieldnames=fieldnames)
@@ -149,10 +262,14 @@ def save_scores(player):
         csv_writer.writerow({"Name": player.name, "Race": player.race, "Class": player.p_class,
                              "Kills": points.total_kills, "Points": points.total_points})
 
+
 def battle(player):
+
     time.sleep(0.5)
     os.system("cls")
+
     global enemy
+    # Enemy select from Enemy.py
     enemy = enemy_select(Orc(), Bat(), Skeleton(), Ant(), Scorpion())
     enemy.display()
 
@@ -169,6 +286,7 @@ def battle(player):
         print("\n")
         if player.is_dead() is True:
             time.sleep(2)
+            os.system("cls")
             points.result(player)
             time.sleep(6)
             save_scores(player)

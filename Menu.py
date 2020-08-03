@@ -1,29 +1,35 @@
-
 import sys
 from Battle import *
 from AboutMe import *
 from Scores import *
 
-#Intro
+
+# Intro 1
 def display_intro1():
+
+    os.system("cls")
+
     print('''
 --+--------------------------------------------------------------------+-- 
   |                                                                    |    
-  |   __                 _      _                                      |    
-  |  / _|  _        _   | \    / |  _   _       _                      |    
-  | | |_  |_| |  | |_   |  \/\/  | | | |_| ||  | \                     |    
-  |  \__| | |  \/  |_   |___/\___| |_| | \ ||_ |_/                     |    
+  |            __                 _      _                             |    
+  |           / _|  _        _   | \    / |  _   _       _             |
+  |          | |_  |_| |  | |_   |  \/\/  | | | |_| ||  | \            |
+  |           \__| | |  \/  |_   |___/\___| |_| | \ ||_ |_/            |
   |                                                                    |    
   | ==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--== |    
-  |      Hello Adventurer!               Welcome to CaveWorld!         |
+  |      Hello Adventurer!               Welcome to the CaveWorld!     |
   |                                                                    |    
 --+--------------------------------------------------------------------+--
   '                                                                    '     ''')
-    time.sleep(2)
+    time.sleep(1.5)
     os.system("cls")
 
+
+# Intro 2
 def display_intro2():
-        print('''
+
+    print('''
 
                  .......::::::::::::)..           .......................(::::::........
           .:::::;;;;;;;;):::::::.... .           .......:::::::::::::<......
@@ -57,34 +63,32 @@ def display_intro2():
                
           
           ''')
-        time.sleep(2)
-        os.system("cls")
-
-
+    time.sleep(2)
+    os.system("cls")
 
 
 # Main menu
-
 def main_menu():
+
     display_intro1()
     display_intro2()
     choice = None
 
     while choice != '4':
 
-        print(
-                """
-        --------------------
-        |       Menu       |
-        --------------------
-        |   1 - New Game   |
-        --------------------
-        |   2 - Scores     |
-        --------------------
-        |   3 - About Me   |
-        --------------------
-        |   4 - Exit       |
-        --------------------
+        print("""
+        
+--------------------
+|       Menu       |
+--------------------
+|   1 - New Game   |
+--------------------
+|   2 - Scores     |
+--------------------
+|   3 - About Me   |
+--------------------
+|   4 - Exit       |
+--------------------
 
             """)
         choice = input("Choice: ")
@@ -94,18 +98,24 @@ def main_menu():
         if choice == "1":
 
             player = create_character()
+            battle_intro()
             battle(player)
             return main_menu()
 
         # Scores
         elif choice == "2":
             scores_load()
+            print('\n====press KEY and ENTER to return====')
+            key = input('>>>')
+            if key != "Z":
+                return main_menu()
 
         # About Me
         elif choice == "3":
             about_me()
-            key = input('\t\t\t====press KEY to return====')
-            if key != "":
+            print('\n====press KEY and ENTER to return====')
+            key = input('>>>')
+            if key != "Z":
                 return main_menu()
 
         # Exit

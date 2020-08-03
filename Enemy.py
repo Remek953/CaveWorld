@@ -2,13 +2,14 @@ import random
 import time
 
 
+class Monster:
 
-class Monster():
     """
     Class represents the enemy stats.
     """
-    def __init__(self, name, base_attack, defense, max_health,
-                critical_chance, hit_chance, evade, points):
+
+    def __init__(self, name, base_attack, defense, max_health, critical_chance, hit_chance, evade, points):
+
         self.name = name
         self.base_attack = base_attack
         self.defense = defense
@@ -20,45 +21,51 @@ class Monster():
         self.points = points
 
     def get_attack(self):
-        attack = round(random.uniform(self.base_attack/3, self.base_attack))
+
+        attack = round(random.uniform(self.base_attack/3, self.base_attack), 2)
         return attack
 
     def get_defense(self):
+
         return self.defense
 
     def get_hit_chance(self):
+
         hit = round(random.uniform(1, self.hit_chance), 2)
         return hit
 
     def get_evade_chance(self):
+
         evade = round(random.uniform(1, self.evade), 2)
         return evade
 
     def get_critical_chance(self):
-        critical = round(random.uniform(0, 10), 2)
+
+        critical = round(random.uniform(0, self.critical_chance), 2)
         return critical
 
     def get_critical_dmg(self):
-        critical_dmg = round(2 * self.get_attack())
+
+        critical_dmg = round(2 * self.get_attack(), 2)
         return critical_dmg
 
     def is_dead(self):
+
         if self.health <= 0:
             print(f"{self.name.title()} has been slayed.")
             return True
+
         else:
             return False
 
-    def count_kill(self):
-        return self.points
-
 
 class Orc(Monster):
+
     def __init__(self):
-        super().__init__("orc", 50, 25, 200, 6, 9, 3, 10)
+        super().__init__("orc", 50, 25, 250, 6, 9, 3, 10)
 
     def display(self):
-        print(f" A dangerous {self.name} has appeared!")
+        print(f"\nA dangerous {self.name} has appeared!")
         print("""
                             (    )
                           ((((()))
@@ -93,11 +100,12 @@ class Orc(Monster):
 
 
 class Bat(Monster):
+
     def __init__(self):
         super().__init__("bat", 20, 5, 100, 4, 9, 5, 2)
 
     def display(self):
-        print(f" A wicked {self.name} has appeared!")
+        print(f"\nA wicked {self.name} has appeared!")
         print("""
 
                 =/\                 /\=
@@ -118,11 +126,12 @@ class Bat(Monster):
 
 
 class Skeleton(Monster):
+
     def __init__(self):
         super().__init__("skeleton", 35, 10, 200, 5, 9, 2, 5)
 
     def display(self):
-        print(f" A murderous {self.name} has appeared!")
+        print(f"\nA murderous {self.name} has appeared!")
         print("""
             
                         ,--.
@@ -146,11 +155,12 @@ class Skeleton(Monster):
 
 
 class Ant(Monster):
+
     def __init__(self):
         super().__init__("giant ant", 40, 25, 350, 4, 9, 4, 8)
 
     def display(self):
-        print(f" A {self.name} has appeared!")
+        print(f"\nA {self.name} has appeared!")
         print("""
         
              \       /
@@ -175,11 +185,12 @@ class Ant(Monster):
 
 
 class Scorpion(Monster):
+
     def __init__(self):
-        super().__init__("deadly scorpion", 70, 5, 75, 7, 9, 8, 6)
+        super().__init__("deadly scorpion", 70, 5, 100, 7, 9, 8, 6)
 
     def display(self):
-        print(f" A {self.name} has appeared!")
+        print(f"\nA {self.name} has appeared!")
         print("""
         
                ___ __ 

@@ -1,24 +1,37 @@
 import random,time
 
+def battle_intro():
 
+    b_intro = random.randint(1,3)
 
-
-
-
-
-
-
-def play():
-    print('''
-
-    The world is in chaos and now there is no one to stop you from gain glory and fame.
-    Use your magnificent and innate skills to kill as many monsters as possible.
-    Good Luck!
+    if b_intro == 1:
+        print('''
     
-    
-    ''')
+        The world is in chaos and now there is no one to stop you from gain glory and fame.
+        Use your magnificent and innate skills to kill as many monsters as possible.
+        Good Luck!
+        
+        
+        ''')
+    elif b_intro == 2:
+        print('''
+        15 years ago, the first “portal” that connected the real world with the monster world opened.
+        People received the power to hunt monsters within the portal. They are known as "Hunters".
+        You enter the first "A" level portal to find legendary sword.  
+        
+        
+        ''')
 
 
+    elif b_intro == 3:
+        print('''
+        You was wrongly accused of murder. You have been sent to The CaveWorld - the most dangerous prison on the world. 
+        You will spend the rest of your life in tha place. 
+        Escape from prison and prove your innocent.
+        
+        ''')
+
+def 1():
     orcs_count = 0
 
     while hero_health > 0:
