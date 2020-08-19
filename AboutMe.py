@@ -1,11 +1,11 @@
-import os
 import time
+from Character import clear_screen
 
 
 def about_me():
 
     time.sleep(0.5)
-    os.system("cls")
+    clear_screen()
 
     print('''
     

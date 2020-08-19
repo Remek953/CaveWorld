@@ -1,4 +1,3 @@
-import sys
 from Battle import *
 from AboutMe import *
 from Scores import *
@@ -7,7 +6,7 @@ from Scores import *
 # Intro 1
 def display_intro1():
 
-    os.system("cls")
+    clear_screen()
 
     print('''
 --+--------------------------------------------------------------------+-- 
@@ -23,7 +22,7 @@ def display_intro1():
 --+--------------------------------------------------------------------+--
   '                                                                    '     ''')
     time.sleep(1.5)
-    os.system("cls")
+    clear_screen()
 
 
 # Intro 2
@@ -64,7 +63,7 @@ def display_intro2():
           
           ''')
     time.sleep(2)
-    os.system("cls")
+    clear_screen()
 
 
 # Main menu

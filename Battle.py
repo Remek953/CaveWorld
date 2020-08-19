@@ -5,7 +5,7 @@ import csv
 
 def battle_intro():
 
-    os.system("cls")
+    clear_screen()
 
     """ 3 different random intros to the game """
 
@@ -43,7 +43,7 @@ Good Luck!
 
         ''')
         time.sleep(5)
-        os.system("cls")
+        clear_screen()
 
     elif b_intro == 2:
 
@@ -75,7 +75,7 @@ Good Luck!
 
         ''')
         time.sleep(5)
-        os.system("cls")
+        clear_screen()
 
     elif b_intro == 3:
 
@@ -105,7 +105,7 @@ Good Luck!
         
         ''')
         time.sleep(5)
-        os.system("cls")
+        clear_screen()
 
 
 # Enemy select from list of monsters
@@ -270,7 +270,7 @@ def save_scores(player):
 def battle(player):
 
     time.sleep(0.5)
-    os.system("cls")
+    clear_screen()
 
     global enemy
     # Enemy select from Enemy.py
@@ -290,11 +290,11 @@ def battle(player):
         print("\n")
         if player.is_dead() is True:
             time.sleep(2)
-            os.system("cls")
+            clear_screen()
             points.result(player)
             time.sleep(6)
             save_scores(player)
             points.reset()
-            os.system("cls")
+            clear_screen()
 
 

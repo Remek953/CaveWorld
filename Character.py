@@ -1,7 +1,16 @@
 import copy
-import os
 import random
 import time
+from os import system, name
+
+
+def clear_screen():
+    # check operating system and clear the screen
+    if name == 'nt':
+        _ = system('cls')
+
+    else:
+        _ = system('clear')
 
 
 class Character:
@@ -157,7 +166,7 @@ def choose_race():
                      'vitality': 20, 'defense': 10, 'race': 'fairy'}
             race_stats.update(stats)
     time.sleep(0.5)
-    os.system("cls")
+    clear_screen()
 
     return race_stats
 
@@ -165,7 +174,7 @@ def choose_race():
 def create_stats():
 
     time.sleep(0.5)
-    os.system("cls")
+    clear_screen()
 
     race_stats = choose_race()
 
@@ -351,7 +360,7 @@ If you choose to, you can then take points from an attribute and put them back i
 def choose_class():
 
     time.sleep(0.5)
-    os.system("cls")
+    clear_screen()
 
     print("""
               Choose your class:

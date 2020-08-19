@@ -1,6 +1,7 @@
 import os
 import time
 import csv
+from Character import clear_screen
 
 
 # Load scoreboard from Scores.csv
@@ -11,7 +12,7 @@ def scores_load():
     """
 
     time.sleep(0.5)
-    os.system("cls")
+    clear_screen()
 
     if os.path.exists("Scores.csv") == True:
         with open("Scores.csv", "r") as file_object:
