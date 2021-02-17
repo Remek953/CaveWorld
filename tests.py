@@ -40,7 +40,7 @@ class TestsClassWarrior(unittest.TestCase):
 		self.assertGreater(self.hero.get_hit_chance(), 10)
 	def test_never_get_hit_chance(self):
 		self.hero.agility = -1000
-		self.assertLess(self.hero.get_hit_chance(), 10)
+		self.assertLess(self.hero.get_hit_chance(), 1)
 
 	def test_valid_get_evade_chance(self):
 		assert 0 < self.hero.get_evade_chance() <= 10
@@ -49,7 +49,7 @@ class TestsClassWarrior(unittest.TestCase):
 		self.assertGreater(self.hero.get_evade_chance(), 10)
 	def test_never_get_evade_chance(self):
 		self.hero.agility = -1000
-		self.assertLess(self.hero.get_evade_chance(), 10)
+		self.assertLess(self.hero.get_evade_chance(), 1)
 
 	def test_valid_get_critical_chance(self):
 		assert 0 < self.hero.get_critical_chance() <= 10
@@ -58,7 +58,7 @@ class TestsClassWarrior(unittest.TestCase):
 		self.assertGreater(self.hero.get_critical_chance(), 10)
 	def test_never_get_critical_chance(self):
 		self.hero.dexterity = -1000
-		self.assertLess(self.hero.get_critical_chance(), 10)
+		self.assertLess(self.hero.get_critical_chance(), 1)
 
 	def test_get_critical_dmg(self):
 		self.assertLessEqual(self.hero.get_critical_dmg(), 2*(self.hero.base_attack + self.hero.strength)) and \
@@ -91,10 +91,10 @@ class TestsClassMonk(unittest.TestCase):
 								vitality = 10, defense = 10, 
 								race = "None"
 								)
-		self.hero.rogue()
+		self.hero.monk()
 
 	def test_valid_monk_max_health(self):
-		self.assertEqual(self.hero.max_health, 150)
+		self.assertEqual(self.hero.max_health, 180)
 
 
 if __name__ == "__main__":
