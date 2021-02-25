@@ -1,7 +1,9 @@
 import unittest
 import unittest.mock
+from mock import Mock
+from unittest import mock
 
-from Character import create_name, Character
+from Character import create_name, Character, choose_race
 
 class TestName(unittest.TestCase):
 	
@@ -95,6 +97,42 @@ class TestsClassMonk(unittest.TestCase):
 
 	def test_valid_monk_max_health(self):
 		self.assertEqual(self.hero.max_health, 180)
+
+
+class TestsRaceStats(unittest.TestCase):
+
+	def setUp(self):
+		self.human = {'strength': 20, 'agility': 15, 
+					'dexterity': 15, 'vitality': 15, 
+					'defense': 15, 'race': 'human'}
+
+		self.orc = {'strength': 30, 'agility': 10, 
+					'dexterity': 10, 'vitality': 20, 
+					'defense': 20, 'race': 'orc'}
+
+		self.elf= { 'strength': 10, 'agility': 30, 
+					'dexterity': 10, 'vitality': 25, 
+					'defense': 15, 'race': 'elf'}
+
+		self.fairy = {  'strength': 10, 'agility': 20, 
+						'dexterity': 30, 'vitality': 20, 
+						'defense': 10, 'race': 'fairy'}
+
+	def test_human_stats(self):
+		with unittest.mock.patch('builtins.input', return_value='human'):
+			self.assertEqual(choose_race(), self.human)
+
+	def test_orc_stats(self):
+		with unittest.mock.patch('builtins.input', return_value='orc'):
+			self.assertEqual(choose_race(), self.orc)
+
+	def test_elf_stats(self):
+		with unittest.mock.patch('builtins.input', return_value='elf'):
+			self.assertEqual(choose_race(), self.elf)
+
+	def test_fairy_stats(self):
+		with unittest.mock.patch('builtins.input', return_value='fairy'):
+			self.assertEqual(choose_race(), self.fairy)
 
 
 if __name__ == "__main__":
