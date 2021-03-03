@@ -1,9 +1,12 @@
+from unittest import TestCase, mock
+
 import unittest
 import unittest.mock
 from mock import Mock
-from unittest import mock
 
 from Character import create_name, Character, choose_race
+from Enemy import Orc, Skeleton, Bat, Ant, Scorpion
+
 
 class TestName(unittest.TestCase):
 	
@@ -66,7 +69,6 @@ class TestsClassWarrior(unittest.TestCase):
 		self.assertLessEqual(self.hero.get_critical_dmg(), 2*(self.hero.base_attack + self.hero.strength)) and \
 		self.assertGreaterEqual(self.hero.get_critical_dmg(), 2*(self.hero.base_attack + self.hero.strength) / 2) 
 		
-
 
 class TestsClassRogue(unittest.TestCase):
 
@@ -133,6 +135,44 @@ class TestsRaceStats(unittest.TestCase):
 	def test_fairy_stats(self):
 		with unittest.mock.patch('builtins.input', return_value='fairy'):
 			self.assertEqual(choose_race(), self.fairy)
+
+class TestsMonster(unittest.TestCase):
+
+	def setUp(self):
+		self.orc = {'name': 'orc', 'base_attack': 50, 'defense': 25, 
+		'max_health': 250, 'health': 250,  'critical_chance': 6, 
+		'hit_chance': 9, 'evade': 3, 'points':10}
+
+		self.bat = {'name': 'bat', 'base_attack': 20, 'defense': 5, 
+		'max_health': 100, 'health': 100,  'critical_chance': 4, 
+		'hit_chance': 9, 'evade': 5, 'points':2}
+
+		self.skeleton = {'name': 'skeleton', 'base_attack': 35, 'defense': 10, 
+		'max_health': 200, 'health': 200,  'critical_chance': 5, 
+		'hit_chance': 9, 'evade': 2, 'points':5}
+
+		self.ant = {'name': 'giant ant', 'base_attack': 40, 'defense': 25, 
+		'max_health': 350, 'health': 350,  'critical_chance': 4, 
+		'hit_chance': 9, 'evade': 4, 'points':8}
+
+		self.scorpion = {'name': 'deadly scorpion', 'base_attack': 70, 'defense': 5, 
+		'max_health': 100, 'health': 100,  'critical_chance': 7, 
+		'hit_chance': 9, 'evade': 8, 'points':6}
+
+	def test_orc_stats(self):
+		self.assertEqual(vars(Orc()), self.orc)
+
+	def test_bat_stats(self):
+		self.assertEqual(vars(Bat()), self.bat)
+
+	def test_skeleton_stats(self):
+		self.assertEqual(vars(Skeleton()), self.skeleton) 
+
+	def test_ant_stats(self):
+		self.assertEqual(vars(Ant()), self.ant)
+
+	def test_scorpion_stats(self):
+		self.assertEqual(vars(Scorpion()), self.scorpion) 
 
 
 if __name__ == "__main__":
